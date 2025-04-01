@@ -95,7 +95,7 @@ const Hero = () => {
         >
           <div className="relative">
             <img
-              src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop"
+              src="https://drive.google.com/file/d/1Ndkf5cX2wyXt-aJPuNytgpDxnqKs6JJ_/view?usp=sharing"
               alt="Profile"
               className="rounded-full w-40 h-40 mx-auto shadow-[0_0_30px_rgba(59,130,246,0.5)]"
             />
@@ -120,7 +120,7 @@ const Hero = () => {
           className="relative mb-4"
         >
           <h1 className="text-4xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-purple-500 to-indigo-500">
-            Hi, I'm [Your Name]
+            Hi, I'm Anamika Ghosh
           </h1>
           <motion.div
             className="absolute -inset-1 rounded-lg bg-gradient-to-r from-blue-500 via-purple-500 to-indigo-500 opacity-30 blur-xl"
@@ -140,7 +140,7 @@ const Hero = () => {
             sequence={[
               'AI Enthusiast',
               2000,
-              'Full Stack Developer',
+              'Web Developer',
               2000,
               'Problem Solver',
               2000,
@@ -167,7 +167,7 @@ const Hero = () => {
           className="flex justify-center gap-4"
         >
           <motion.a
-            href="https://github.com/yourusername"
+            href="https://github.com/Anamikaghosh18"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 bg-gray-800/80 backdrop-blur-sm text-white px-6 py-3 rounded-full transition-all duration-300"
@@ -178,7 +178,8 @@ const Hero = () => {
             GitHub
           </motion.a>
           <motion.a
-            href="/resume.pdf"
+            href="https://drive.google.com/file/d/1FMUY-g5iuaGk-6BB1PIImJW3UWznJoEt/view?usp=sharing"
+            rel="noopener noreferrer"
             target="_blank"
             className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-3 rounded-full transition-all duration-300"
             whileHover={{ scale: 1.05 }}

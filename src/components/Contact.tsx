@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { Mail, Linkedin, Github, Twitter } from 'lucide-react';
+import { Mail, Linkedin, Github, Twitter, Instagram } from 'lucide-react';
+import { label } from 'framer-motion/client';
 
 const Contact = () => {
   const [ref, inView] = useInView({
@@ -9,29 +10,31 @@ const Contact = () => {
   });
 
   const socialLinks = [
-    {
-      icon: Mail,
-      href: "mailto:your.email@example.com",
-      color: "#3B82F6",
-      label: "Email"
-    },
+  
     {
       icon: Linkedin,
-      href: "https://linkedin.com/in/yourusername",
+      href: "https://linkedin.com/in/anamikaghosh18",
       color: "#0A66C2",
       label: "LinkedIn"
     },
     {
       icon: Github,
-      href: "https://github.com/yourusername",
+      href: "https://github.com/Anamikaghosh18",
       color: "#6E7681",
       label: "GitHub"
     },
     {
       icon: Twitter,
-      href: "https://twitter.com/yourusername",
+      href: "https://twitter.com/__imanamika",
       color: "#1DA1F2",
       label: "Twitter"
+    }
+    ,
+    {
+      icon : Instagram,
+      href: "https://www.instagram.com/__imanamika/",
+      color: "#E1306C", 
+      label: "Instagram"
     }
   ];
 
@@ -153,7 +156,7 @@ const Contact = () => {
                 href="mailto:your.email@example.com"
                 className="text-blue-400 hover:text-blue-300 transition-colors duration-300"
               >
-                your.email@example.com
+                g.anamika0101@gmail.com
               </a>
             </p>
           </div>
