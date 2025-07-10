@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anamika Ghosh - Developer Portfolio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:400,500,600,700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap">
+  <style>
+    body { font-family: 'Poppins', 'Inter', sans-serif; font-size: 0.97rem; }
+    .fade-in { animation: fadeIn 0.8s ease-out; }
+    .slide-up { animation: slideUp 0.8s ease-out; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    .typewriter > .typewriter-text {
+      border-right: 2px solid #7c3aed;
+      white-space: nowrap;
+      overflow: hidden;
+      display: inline-block;
+      animation: blink-caret 0.75s step-end infinite;
+    }
+    @keyframes blink-caret {
+      0%, 100% { border-color: transparent; }
+      50% { border-color: #7c3aed; }
+    }
+    @keyframes bounce-x {
+      0%, 100% { transform: translateX(0);}
+      50% { transform: translateX(8px);}
+    }
+    .animate-bounce-x { animation: bounce-x 1s infinite; }
+    .dark body, body.dark {
+      background: #18181b !important;
+      color: #f3f4f6 !important;
+    }
+    .dark .bg-white, body.dark .bg-white { background: #202020 !important; }
+    .dark .text-gray-900, body.dark .text-gray-900 { color: #f3f4f6 !important; }
+    .dark .text-gray-700, body.dark .text-gray-700 { color: #d1d5db !important; }
+    .dark .text-gray-600, body.dark .text-gray-600 { color: #a1a1aa !important; }
+    .dark .border-gray-200, body.dark .border-gray-200 { border-color: #2d2d3a !important; }
+    .dark .bg-gray-50, body.dark .bg-gray-50 { background: #202020 !important; }
+    .dark .bg-gray-100, body.dark .bg-gray-100 { background: #202020 !important; }
+    .dark .bg-purple-700, body.dark .bg-purple-700 { background: #7c3aed !important; }
+    .dark .bg-purple-800, body.dark .bg-purple-800 { background: #6d28d9 !important; }
+    .dark .shadow, body.dark .shadow { box-shadow: 0 2px 8px 0 #0004 !important; }
+    .card-anim {
+      transition: box-shadow 0.3s, border-color 0.3s, background 0.3s;
+      box-shadow: 0 2px 8px 0 rgba(60,60,60,0.08);
+      border: 1px solid #e5e7eb;
+      background: inherit;
+      position: relative;
+      z-index: 1;
+    }
+    .card-anim::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 0.75rem;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s;
+      background: linear-gradient(120deg, rgba(59,130,246,0.13), rgba(96,165,250,0.13), rgba(30,64,175,0.10));
+      z-index: 2;
+    }
+    .card-anim:hover {
+      box-shadow: 0 8px 32px 0 rgba(59,130,246,0.18), 0 1.5px 6px 0 rgba(30,64,175,0.12);
+      border-color: #9b4ed6 !important;
+    }
+    .card-anim:hover::after {
+      opacity: 0.1;
+    }
+    .dark .card-anim::after {
+      background: linear-gradient(120deg, rgba(59,130,246,0.18), rgba(30,64,175,0.18));
+    }
+    .dark .bg-purple-50, body.dark .bg-purple-50 { background: #232336 !important; }
+    .dark .bg-blue-50, body.dark .bg-blue-50 { background: #232336 !important; }
+    .dark .bg-green-50, body.dark .bg-green-50 { background: #232336 !important; }
+    .dark .bg-yellow-50, body.dark .bg-yellow-50 { background: #232336 !important; }
+  </style>
+</head>
+<body class="bg-white text-gray-800 transition-colors duration-300">
+  <!-- Navigation (floating, not sticky) -->
+<nav class="w-full bg-white border-b border-gray-300 shadow-sm rounded-2xl mt-6 mb-10 mx-auto max-w-4xl">
+  <div class="max-w-5xl mx-auto px-6">
+    <div class="flex items-center justify-between h-16">
+      <div class="text-2xl font-bold text-purple-700 tracking-tight">AG</div>
+      <div class="hidden md:flex space-x-8">
+        <a href="#home" class="hover:text-purple-600 transition">Home</a>
+        <a href="#about" class="hover:text-purple-600 transition">About</a>
+        <a href="#projects" class="hover:text-purple-600 transition">Projects</a>
+        <a href="#experience" class="hover:text-purple-600 transition">Experience</a>
+        <a href="#contact" class="hover:text-purple-600 transition">Contact</a>
+      </div>
+      <div class="flex items-center space-x-2">
+        <button id="theme-toggle" class="p-2 rounded hover:bg-gray-100" title="Toggle dark mode">
+          <svg id="theme-icon" class="w-6 h-6 text-purple-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path id="sun" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m8.66-8.66l-.71.71M4.05 19.07l-.71-.71M21 12h-1M4 12H3m16.95 7.07l-.71-.71M4.05 4.93l-.71.71M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+          </svg>
+        </button>
+        <button id="mobile-menu-btn" class="md:hidden p-2 rounded hover:bg-gray-100">
+          <svg class="w-6 h-6 text-purple-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-200">
+    <div class="px-6 py-4 flex flex-col space-y-2">
+      <a href="#home" class="hover:text-purple-600 transition">Home</a>
+      <a href="#about" class="hover:text-purple-600 transition">About</a>
+      <a href="#experience" class="hover:text-purple-600 transition">Experience</a>
+      <a href="#projects" class="hover:text-purple-600 transition">Projects</a>
+      <a href="#contact" class="hover:text-purple-600 transition">Contact</a>
+    </div>
+  </div>
+</nav>
+
+  <main class="max-w-5xl mx-auto px-6 md:px-40 pt-10">
+  <!-- Home Section Modernized -->
+  <section id="home" class="min-h-[60vh] flex flex-col md:flex-row items-center justify-between gap-10 fade-in mb-16">
+    <!-- Left: Name, Roles -->
+    <div class="flex-1 flex flex-col items-center md:items-start text-center md:text-left">
+      <h1 class="text-4xl md:text-5xl font-bold mb-3 text-gray-900">
+        Hi, I'm <span class="text-purple-700">Anamika Ghosh</span>
+      </h1>
+      <div class="typewriter text-xl text-gray-600 mb-4 h-8">
+        <span id="typewriter-text" class="typewriter-text"></span>
+      </div>
+      <!-- Add these buttons below the name and typewriter -->
+      <div class="flex gap-3 mt-2">
+        <a href="https://drive.google.com/file/d/1FMUY-g5iuaGk-6BB1PIImJW3UWznJoEt/view?usp=drive_link" target="_blank" class="border border-purple-700 text-purple-700 px-4 py-1.5 rounded hover:bg-purple-700 hover:text-white transition text-xs font-medium">
+          Resume
+        </a>
+        <a href="https://techieanamika.hashnode.dev/" target="_blank" class="border border-purple-700 text-purple-700 px-4 py-1.5 rounded hover:bg-purple-700 hover:text-white transition text-xs font-medium">
+          Read My Articles
+        </a>
+      </div>
+    </div>
+    <!-- Right: Profile & Socials -->
+    <div class="flex flex-col items-center md:items-end">
+      <div class="relative group">
+        <img src="images\profile_pic.jpg" alt="Profile" class="w-40 h-40 rounded-full border-4 border-transparent group-hover:border-gradient-to-tr group-hover:from-purple-400 group-hover:to-pink-400 shadow-xl transition-all duration-300">
+      </div>
+      <!-- Center the icons below the profile pic on all screens -->
+      <div class="flex space-x-3 mt-4 justify-center md:justify-center w-full">
+        <!-- GitHub -->
+        <a href="https://github.com/Anamikaghosh18" target="_blank" class="text-gray-500 hover:text-purple-700 transition-transform hover:scale-125" title="GitHub">
+          <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2C6.477 2 2 6.484 2 12.021c0 4.428 2.865 8.184 6.839 9.504.5.092.682-.217.682-.483 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.157-1.11-1.465-1.11-1.465-.908-.62.069-.608.069-.608 1.004.07 1.532 1.032 1.532 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.339-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.748-1.025 2.748-1.025.546 1.378.203 2.397.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.847-2.339 4.695-4.566 4.944.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.744 0 .268.18.579.688.481C19.138 20.2 22 16.448 22 12.021 22 6.484 17.523 2 12 2z"/>
+          </svg>
+        </a>
+        <!-- LinkedIn -->
+        <a href="https://linkedin.com/in/anamikaghosh18" target="_blank" class="text-gray-500 hover:text-blue-600 transition-transform hover:scale-125" title="LinkedIn">
+          <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.27c-.966 0-1.75-.79-1.75-1.76 0-.97.784-1.76 1.75-1.76s1.75.79 1.75 1.76c0 .97-.784 1.76-1.75 1.76zm13.5 11.27h-3v-5.6c0-1.34-.03-3.07-1.87-3.07-1.87 0-2.16 1.46-2.16 2.97v5.7h-3v-10h2.89v1.36h.04c.4-.75 1.38-1.54 2.84-1.54 3.04 0 3.6 2 3.6 4.59v5.59z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+      <!-- About Section -->
+    <section id="about" class="py-20">
+      <div class="slide-up">
+        <h2 class="text-2xl md:text-3xl font-bold text-center mb-10 text-gray-900">About Me</h2>
+        <div class="grid md:grid-cols-2 gap-8 items-start">
+          <div>
+            <p class="text-base md:text-[1rem] text-gray-500 mb-3">
+              I'm a passionate developer with over 3 years of experience building modern web applications. I love creating elegant solutions to complex problems and turning ideas into reality through code.
+            </p>
+            <p class="text-base md:text-[1rem] text-gray-500 mb-3">
+              My expertise spans across frontend technologies like React, Vue.js, and backend technologies like Node.js, Python, and various databases. I'm always eager to learn new technologies and tackle challenging projects.
+            </p>
+          </div>
+          <div>
+            <div class="bg-white border border-gray-300 rounded-lg p-6 shadow card-anim mb-5 text-sm">
+              <h3 class="text-lg font-semibold mb-3 text-gray-900">Quick Facts</h3>
+              <ul class="space-y-2 text-gray-700">
+                <li>3+ Years Experience</li>
+                <li>50+ Projects Completed</li>
+                <li>Available for Freelance</li>
+              </ul>
+            </div>
+            <!-- Top Skills Card -->
+            <div class="bg-white border border-gray-200 rounded-lg p-4 shadow card-anim text-sm">
+              <h3 class="text-lg font-semibold mb-3 text-gray-900">Top Skills</h3>
+              <ul id="top-skills" class="flex flex-wrap gap-2 text-gray-700"></ul>
+              <button id="view-more-skills" class="mt-3 text-purple-700 hover:underline text-xs">View More</button>
+              <ul id="all-skills" class="flex flex-wrap gap-2 text-gray-700 mt-3 hidden"></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Projects Section -->
+    <section id="projects" class="py-20">
+      <div class="slide-up">
+        <h2 class="text-3xl font-bold text-center mb-10 text-gray-900">Projects</h2>
+        <div id="projects-list" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- JS will fill this -->
+        </div>
+        <div class="flex justify-center mt-8">
+          <button id="view-more-projects" class="flex items-center bg-purple-700 text-white px-5 py-2 rounded hover:bg-purple-800 transition text-sm">
+            See More
+            <svg class="w-5 h-5 ml-2 animate-bounce-x" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+
+
+    <!-- Experience Section -->
+    <section id="experience" class="py-20">
+      <div class="slide-up">
+        <h2 class="text-3xl font-bold text-center mb-10 text-gray-900">Experience</h2>
+        <div class="space-y-8">
+          <div class="bg-white border border-gray-200 rounded-lg p-6 shadow">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-2">
+              <h3 class="text-xl font-semibold text-purple-700">Senior Full Stack Developer</h3>
+              <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm font-medium mt-2 md:mt-0">2023 - Present</span>
+            </div>
+            <p class="text-gray-800 font-medium mb-1">Tech Company Inc.</p>
+            <p class="text-gray-600 mb-3">
+              Led development of multiple web applications using React, Node.js, and MongoDB. Collaborated with cross-functional teams to deliver high-quality solutions.
+            </p>
+            <div class="flex flex-wrap gap-2">
+              <span class="px-3 py-1 bg-purple-50 text-purple-700 rounded-full text-sm">React</span>
+              <span class="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm">Node.js</span>
+              <span class="px-3 py-1 bg-green-50 text-green-700 rounded-full text-sm">MongoDB</span>
+              <span class="px-3 py-1 bg-yellow-50 text-yellow-700 rounded-full text-sm">AWS</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20">
+      <div class="slide-up">
+        <h2 class="text-3xl font-bold text-center mb-10 text-gray-900">Get In Touch</h2>
+        <div class="grid md:grid-cols-2 gap-10">
+          <div class="flex flex-col justify-center">
+            <h3 class="text-xl font-semibold mb-6">Let's work together</h3>
+            <p class="text-gray-700 mb-6">
+              Want to hire me as a <span class="font-semibold text-purple-700">freelancer</span>? Let's discuss your project directly on WhatsApp!
+            </p>
+            <a href="https://wa.me/919693827534" target="_blank" class="inline-flex items-center px-5 py-3 bg-green-400 text-white rounded-lg shadow hover:bg-green-600 transition mb-8">
+              <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M20.52 3.48A12.07 12.07 0 0 0 12 0C5.37 0 0 5.37 0 12c0 2.11.55 4.16 1.6 5.97L0 24l6.22-1.63A11.94 11.94 0 0 0 12 24c6.63 0 12-5.37 12-12 0-3.21-1.25-6.23-3.48-8.52zM12 22c-1.85 0-3.66-.5-5.23-1.44l-.37-.22-3.69.97.99-3.59-.24-.37A9.94 9.94 0 0 1 2 12c0-5.52 4.48-10 10-10s10 4.48 10 10-4.48 10-10 10zm5.2-7.8c-.28-.14-1.65-.81-1.9-.9-.25-.09-.43-.14-.61.14-.18.28-.7.9-.86 1.08-.16.18-.32.2-.6.07-.28-.14-1.18-.44-2.25-1.4-.83-.74-1.39-1.65-1.55-1.93-.16-.28-.02-.43.12-.57.13-.13.28-.34.42-.51.14-.17.18-.29.27-.48.09-.19.05-.36-.02-.5-.07-.14-.61-1.47-.84-2.02-.22-.53-.45-.46-.62-.47-.16-.01-.36-.01-.56-.01-.19 0-.5.07-.76.34-.26.27-1 1.01-1 2.46s1.03 2.85 1.18 3.05c.15.2 2.03 3.1 4.93 4.23.69.27 1.23.43 1.65.55.69.22 1.32.19 1.82.12.56-.08 1.65-.67 1.89-1.32.23-.65.23-1.21.16-1.32-.07-.11-.25-.18-.53-.32z"/>
+              </svg>
+              Chat on WhatsApp
+            </a>
+            <span class="block text-gray-700 mb-4 font-medium text-lg">Connect with me on Socials</span>
+            <div class="flex space-x-6">
+              <a href="https://linkedin.com/in/anamikaghosh18" target="_blank" title="LinkedIn" class="text-blue-600 hover:text-blue-800">
+                <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.27c-.966 0-1.75-.79-1.75-1.76 0-.97.784-1.76 1.75-1.76s1.75.79 1.75 1.76c0 .97-.784 1.76-1.75 1.76zm13.5 11.27h-3v-5.6c0-1.34-.03-3.07-1.87-3.07-1.87 0-2.16 1.46-2.16 2.97v5.7h-3v-10h2.89v1.36h.04c.4-.75 1.38-1.54 2.84-1.54 3.04 0 3.6 2 3.6 4.59v5.59z"/></svg>
+              </a>
+              <a href="https://x.com/__imanamika" target="_blank" title="X" class="text-black hover:text-gray-700">
+                <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 1200 1227"><path d="M1200 21.6l-462.9 590.7L1200 1205.4h-273.6L600 813.6 273.6 1205.4H0l462.9-593.1L0 21.6h273.6L600 413.4 926.4 21.6z"/></svg>
+              </a>
+              <a href="https://instagram.com/__imanamika" target="_blank" title="Instagram" class="text-pink-500 hover:text-pink-700">
+                <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2zm0 1.5A4.25 4.25 0 0 0 3.5 7.75v8.5A4.25 4.25 0 0 0 7.75 20.5h8.5A4.25 4.25 0 0 0 20.5 16.25v-8.5A4.25 4.25 0 0 0 16.25 3.5zm4.25 2.75a5.75 5.75 0 1 1 0 11.5 5.75 5.75 0 0 1 0-11.5zm0 1.5a4.25 4.25 0 1 0 0 8.5 4.25 4.25 0 0 0 0-8.5zm6.25 1.25a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/></svg>
+              </a>
+              <a href="https://github.com/Anamikaghosh18" target="_blank" title="GitHub" class="text-gray-700 hover:text-purple-700">
+                <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.021c0 4.428 2.865 8.184 6.839 9.504.5.092.682-.217.682-.483 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.157-1.11-1.465-1.11-1.465-.908-.62.069-.608.069-.608 1.004.07 1.532 1.032 1.532 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.339-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.748-1.025 2.748-1.025.546 1.378.203 2.397.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.847-2.339 4.695-4.566 4.944.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.744 0 .268.18.579.688.481C19.138 20.2 22 16.448 22 12.021 22 6.484 17.523 2 12 2z"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Chatbot -->
+  <div id="chatbot" class="fixed bottom-6 right-6 z-50">
+    <button id="chatbot-toggle" class="bg-purple-700 text-white rounded-full w-14 h-14 shadow-lg flex items-center justify-center focus:outline-none">
+      <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 20h9"></path>
+        <circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="2" fill="none"/>
+      </svg>
+    </button>
+    <div id="chatbot-window" class="hidden bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg w-80 h-96 flex flex-col mt-2">
+      <div class="flex items-center justify-between px-4 py-2 border-b border-gray-200 dark:border-gray-700">
+        <span class="font-semibold text-purple-700">Chatbot</span>
+        <button id="chatbot-close" class="text-gray-400 hover:text-purple-700">&times;</button>
+      </div>
+      <div id="chatbot-messages" class="flex-1 p-4 overflow-y-auto text-sm"></div>
+      <form id="chatbot-form" class="flex p-2 border-t border-gray-200 dark:border-gray-700">
+        <input id="chatbot-input" type="text" class="flex-1 p-2 rounded border border-gray-300 dark:bg-gray-800 dark:text-white focus:outline-none" placeholder="Type a message..." autocomplete="off">
+        <button class="ml-2 bg-purple-700 text-white px-4 py-2 rounded hover:bg-purple-800 transition" type="submit">Send</button>
+      </form>
+    </div>
+  </div>
+
+  <footer class="bg-gray-50 py-8 border-t border-gray-200 mt-16">
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="text-center">
+        <p class="text-gray-500">&copy; Anamika Ghosh. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+  <script src="main.js"></script>
+</body>
+</html>
