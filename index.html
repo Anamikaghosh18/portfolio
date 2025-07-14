@@ -198,6 +198,14 @@
     <section id="projects" class="py-20">
       <div class="slide-up">
         <h2 class="text-3xl font-bold text-center mb-10 text-gray-900">Projects</h2>
+        <!-- Filter Buttons -->
+        <div class="flex justify-center gap-3 mb-8">
+          <button class="project-filter px-4 py-2 rounded border border-purple-700 text-white bg-purple-700 transition text-sm font-medium"
+        data-filter="all">All</button>
+          <button class="project-filter px-4 py-2 rounded border border-purple-700 text-purple-700 bg-white hover:bg-purple-700 hover:text-white transition text-sm font-medium" data-filter="web">Web Dev</button>
+          <button class="project-filter px-4 py-2 rounded border border-purple-700 text-purple-700 bg-white hover:bg-purple-700 hover:text-white transition text-sm font-medium" data-filter="ai">AI</button>
+          <button class="project-filter px-4 py-2 rounded border border-purple-700 text-purple-700 bg-white hover:bg-purple-700 hover:text-white transition text-sm font-medium" data-filter="mobile">Mobile App</button>
+        </div>
         <div id="projects-list" class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <!-- JS will fill this -->
         </div>

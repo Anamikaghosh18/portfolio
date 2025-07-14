@@ -66,7 +66,9 @@ document.getElementById('view-more-skills').onclick = function () {
   this.textContent = allSkillsEl.classList.contains('hidden') ? "View More" : "View Less";
 };
 
-// --- Projects section with "View More" ---
+// --- Projects section with filtering ---
+
+// Add a category property to each project
 const projects = [
   {
     title: "E-Commerce Platform",
@@ -74,7 +76,8 @@ const projects = [
     img: "https://via.placeholder.com/400x200/eeeeee/7c3aed?text=Project+1",
     tags: ["React", "Node.js", "MongoDB"],
     demo: "#",
-    github: "#"
+    github: "#",
+    category: "web"
   },
   {
     title: "Portfolio Website",
@@ -82,7 +85,8 @@ const projects = [
     img: "https://via.placeholder.com/400x200/eeeeee/7c3aed?text=Project+2",
     tags: ["HTML", "CSS", "JavaScript"],
     demo: "#",
-    github: "#"
+    github: "#",
+    category: "web"
   },
   {
     title: "Chat Application",
@@ -90,7 +94,8 @@ const projects = [
     img: "https://via.placeholder.com/400x200/eeeeee/7c3aed?text=Project+3",
     tags: ["Node.js", "Socket.io"],
     demo: "#",
-    github: "#"
+    github: "#",
+    category: "web"
   },
   {
     title: "Task Manager",
@@ -98,7 +103,8 @@ const projects = [
     img: "https://via.placeholder.com/400x200/eeeeee/7c3aed?text=Project+4",
     tags: ["React", "Redux"],
     demo: "#",
-    github: "#"
+    github: "#",
+    category: "mobile"
   },
   {
     title: "Blog Platform",
@@ -106,17 +112,35 @@ const projects = [
     img: "https://via.placeholder.com/400x200/eeeeee/7c3aed?text=Project+5",
     tags: ["Vue.js", "Firebase"],
     demo: "#",
-    github: "#"
+    github: "#",
+    category: "web"
+  },
+  {
+    title: "AI Chatbot",
+    desc: "Conversational AI chatbot using NLP.",
+    img: "https://via.placeholder.com/400x200/eeeeee/7c3aed?text=Project+6",
+    tags: ["Python", "NLP"],
+    demo: "#",
+    github: "#",
+    category: "ai"
   }
+  // Add more projects as needed
 ];
+
 let showProjects = 4;
 let expanded = false;
+let currentFilter = "all";
 const projectsList = document.getElementById('projects-list');
 const viewMoreBtn = document.getElementById('view-more-projects');
+
+// Filter logic
 function renderProjects() {
   projectsList.innerHTML = '';
-  const count = expanded ? projects.length : showProjects;
-  projects.slice(0, count).forEach(project => {
+  let filtered = currentFilter === "all"
+    ? projects
+    : projects.filter(p => p.category === currentFilter);
+  const count = expanded ? filtered.length : showProjects;
+  filtered.slice(0, count).forEach(project => {
     const div = document.createElement('div');
     div.className = "bg-white border border-gray-200 rounded-lg p-6 shadow flex flex-col card-anim";
     div.innerHTML = `
@@ -133,18 +157,34 @@ function renderProjects() {
     `;
     projectsList.appendChild(div);
   });
-  if (projects.length <= showProjects) {
+  if (filtered.length <= showProjects) {
     viewMoreBtn.style.display = 'none';
   } else {
     viewMoreBtn.style.display = 'inline-block';
     viewMoreBtn.textContent = expanded ? 'View Less' : 'View More';
   }
 }
-renderProjects();
+
+// Filter button logic
+document.querySelectorAll('.project-filter').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.project-filter').forEach(b => b.classList.remove('bg-purple-700', 'text-white', 'active'));
+    this.classList.add('bg-purple-700', 'text-white', 'active');
+    currentFilter = this.dataset.filter;
+    expanded = false;
+    renderProjects();
+  });
+});
+
+// View more/less logic
 viewMoreBtn.onclick = function () {
   expanded = !expanded;
   renderProjects();
 };
+
+renderProjects();
+
+
 
 // --- Chatbot ---
 const chatbotToggle = document.getElementById('chatbot-toggle');
