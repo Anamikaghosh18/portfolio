@@ -1,16 +1,94 @@
 // Enhanced Google-style Portfolio Interactions
-
 document.addEventListener("DOMContentLoaded", function () {
+  console.log("Portfolio Initializing...");
+
+  // 1. Carousel Initializations
+  function safeInitCarousel(trackId, prevBtnId, nextBtnId) {
+    try {
+      const track = document.getElementById(trackId);
+      const prev = document.getElementById(prevBtnId);
+      const next = document.getElementById(nextBtnId);
+      
+      if (!track || !prev || !next) {
+        console.warn(`Carousel elements missing: ${trackId}, ${prevBtnId}, ${nextBtnId}`);
+        return;
+      }
+
+      const scrollAmount = () => {
+        const firstCard = track.querySelector('.modern-card');
+        return firstCard ? firstCard.clientWidth + 32 : track.clientWidth * 0.8;
+      };
+
+      prev.addEventListener("click", (e) => {
+        e.preventDefault();
+        track.scrollBy({ left: -scrollAmount(), behavior: "smooth" });
+      });
+
+      next.addEventListener("click", (e) => {
+        e.preventDefault();
+        track.scrollBy({ left: scrollAmount(), behavior: "smooth" });
+      });
+      
+      console.log(`Carousel initialized: ${trackId}`);
+    } catch (e) {
+      console.error(`Carousel Init Error (${trackId}):`, e);
+    }
+  }
+
+  safeInitCarousel("projectsTrack", "projectPrev", "projectNext");
+  safeInitCarousel("certificationsTrack", "certPrev", "certNext");
+
+  // 2. Project Filtering Logic
+  const initProjectFilters = () => {
+    try {
+      const filterTrack = document.getElementById("projectsTrack");
+      const filterContainer = document.querySelector(".projects-filter-container");
+      if (!filterTrack || !filterContainer) return;
+
+      const chips = filterContainer.querySelectorAll(".filter-chip");
+      const cards = filterTrack.querySelectorAll(".modern-card");
+
+      filterContainer.addEventListener("click", (e) => {
+        const chip = e.target.closest(".filter-chip");
+        if (!chip) return;
+
+        // Update UI
+        chips.forEach(c => c.classList.remove("active"));
+        chip.classList.add("active");
+
+        const filter = chip.getAttribute("data-filter");
+
+        // Filter cards
+        cards.forEach(card => {
+          if (filter === "all" || card.getAttribute("data-category") === filter) {
+            card.classList.remove("hidden");
+          } else {
+            card.classList.add("hidden");
+          }
+        });
+
+        // Reset scroll
+        filterTrack.scrollTo({ left: 0, behavior: "smooth" });
+        console.log(`Filtered projects by: ${filter}`);
+      });
+    } catch (e) {
+      console.error("Filter Initialization Error:", e);
+    }
+  };
+
+  initProjectFilters();
+
   // Google-style ripple effect for buttons
   function createRipple(event) {
     const button = event.currentTarget;
     const circle = document.createElement("span");
+    const rect = button.getBoundingClientRect();
     const diameter = Math.max(button.clientWidth, button.clientHeight);
     const radius = diameter / 2;
 
     circle.style.width = circle.style.height = `${diameter}px`;
-    circle.style.left = `${event.clientX - button.offsetLeft - radius}px`;
-    circle.style.top = `${event.clientY - button.offsetTop - radius}px`;
+    circle.style.left = `${event.clientX - rect.left - radius}px`;
+    circle.style.top = `${event.clientY - rect.top - radius}px`;
     circle.classList.add("ripple-effect");
 
     const ripple = button.getElementsByClassName("ripple-effect")[0];
@@ -19,15 +97,15 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     button.appendChild(circle);
+
+    setTimeout(() => circle.remove(), 600);
   }
 
-  // Add ripple effect to all buttons
-  const buttons = document.querySelectorAll(".btn, .social-btn, .fab");
-  buttons.forEach((button) => {
-    button.addEventListener("click", createRipple);
+  document.querySelectorAll(".btn, .social-btn, .project-btn, .carousel-btn, .fab").forEach((btn) => {
+    btn.addEventListener("click", createRipple);
   });
 
-  // Google-style smooth scroll with offset for fixed nav
+  // 4. Smooth scroll for navigation
   document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     anchor.addEventListener("click", function (e) {
       e.preventDefault();
@@ -70,8 +148,8 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }, observerOptions);
 
-  // Observe skill items for slide-in animation
-  document.querySelectorAll(".skill-item").forEach((item) => {
+  // Observe skill items and project cards for slide-in animation
+  document.querySelectorAll(".skill-item, .project-card").forEach((item) => {
     observer.observe(item);
   });
 
@@ -88,15 +166,30 @@ document.addEventListener("DOMContentLoaded", function () {
     return dots;
   }
 
-  // Enhanced button interactions
-  document.querySelectorAll(".btn").forEach((btn) => {
-    btn.addEventListener("mouseenter", function () {
-      this.style.transform = "translateY(-2px)";
+  // Remove redundant CSS-already-handled hover logic to prevent distortion
+  // document.querySelectorAll(".btn").forEach((btn) => { ... });
+
+  // Mobile Menu Toggle
+  const menuBtn = document.querySelector(".menu-btn");
+  const navItems = document.querySelector(".nav-items");
+  if (menuBtn && navItems) {
+    menuBtn.addEventListener("click", () => {
+      navItems.classList.toggle("nav-open");
+      const icon = menuBtn.querySelector(".material-symbols-rounded");
+      if (icon) {
+        icon.textContent = navItems.classList.contains("nav-open") ? "close" : "menu";
+      }
     });
-    btn.addEventListener("mouseleave", function () {
-      this.style.transform = "translateY(0)";
+
+    // Close menu when clicking a nav item
+    navItems.querySelectorAll(".nav-item").forEach(item => {
+      item.addEventListener("click", () => {
+        navItems.classList.remove("nav-open");
+        const icon = menuBtn.querySelector(".material-symbols-rounded");
+        if (icon) icon.textContent = "menu";
+      });
     });
-  });
+  }
 
   // Game-style cursor trail effect
   const cursorTrail = document.getElementById("cursorTrail");
@@ -160,6 +253,86 @@ document.addEventListener("DOMContentLoaded", function () {
   );
 
   progressBars.forEach((bar) => progressObserver.observe(bar));
+
+  // Project Filtering Logic
+  const filterChips = document.querySelectorAll(".filter-chip");
+  const projectsGrid = document.querySelector(".projects-grid");
+
+  // Re-query project cards after dynamic rendering
+  const getProjectCards = () => document.querySelectorAll(".project-card");
+
+  filterChips.forEach((chip) => {
+    chip.addEventListener("click", () => {
+      // Update active chip
+      filterChips.forEach((c) => c.classList.remove("active"));
+      chip.classList.add("active");
+
+      const filter = chip.getAttribute("data-filter");
+
+      const projectCards = getProjectCards();
+      projectCards.forEach((card) => {
+        const category = card.getAttribute("data-category");
+        const tags = card.getAttribute("data-tags")?.split(',') || [];
+        
+        // Match logic: 'ai' matches 'ml' category or tags, 'web' matches 'web'
+        const isMatch = filter === "all" || 
+                        category === filter || 
+                        tags.includes(filter) ||
+                        (filter === "ai" && (category === "ml" || tags.includes("ml")));
+
+        if (isMatch) {
+          card.classList.remove("hidden");
+          setTimeout(() => {
+            card.style.opacity = "1";
+            card.style.transform = "scale(1)";
+          }, 10);
+        } else {
+          card.style.opacity = "0";
+          card.style.transform = "scale(0.8)";
+          setTimeout(() => {
+            card.classList.add("hidden");
+          }, 300);
+        }
+      });
+
+      // Scroll projects grid back to start when filter changes
+      const scrollContainer = document.querySelector(".projects-scroll-container");
+      if (scrollContainer) {
+        scrollContainer.scrollTo({ left: 0, behavior: "smooth" });
+      }
+    });
+  });
+
+  // Drag to scroll for projects
+  const scrollContainer = document.querySelector(".projects-scroll-container");
+  if (scrollContainer) {
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    scrollContainer.addEventListener("mousedown", (e) => {
+      isDown = true;
+      scrollContainer.classList.add("active");
+      startX = e.pageX - scrollContainer.offsetLeft;
+      scrollLeft = scrollContainer.scrollLeft;
+    });
+
+    scrollContainer.addEventListener("mouseleave", () => {
+      isDown = false;
+    });
+
+    scrollContainer.addEventListener("mouseup", () => {
+      isDown = false;
+    });
+
+    scrollContainer.addEventListener("mousemove", (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - scrollContainer.offsetLeft;
+      const walk = (x - startX) * 2; // Scroll speed
+      scrollContainer.scrollLeft = scrollLeft - walk;
+    });
+  }
 });
 
 // Google-style Three.js Background Scene
