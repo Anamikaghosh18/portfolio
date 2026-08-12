@@ -170,6 +170,31 @@
     }
     .nav-cta:hover { border-color: var(--ink); color: var(--ink); background: var(--ink-05); }
 
+    .nav-hamburger {
+      display: none;
+      color: var(--ink);
+    }
+    .mobile-menu {
+      position: fixed; inset: 0;
+      background: rgba(13,13,13,0.95);
+      backdrop-filter: blur(15px);
+      z-index: 95;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; visibility: hidden;
+      transition: all var(--med);
+    }
+    .mobile-menu.open { opacity: 1; visibility: visible; }
+    .mobile-menu-inner {
+      display: flex; flex-direction: column; gap: 32px; text-align: center;
+      transform: translateY(20px); transition: all var(--med);
+    }
+    .mobile-menu.open .mobile-menu-inner { transform: translateY(0); }
+    .mobile-link {
+      font-size: 28px; font-weight: 700; letter-spacing: -.02em;
+      color: var(--ink-60); transition: color var(--fast);
+    }
+    .mobile-link:hover { color: var(--ink); }
+
     /* ─── HERO SECTION ───────────────────────────────────── */
     .hero-section {
       padding-top: 0; /* banner goes behind transparent nav */
@@ -778,9 +803,9 @@
     }
     @media (max-width: 640px) {
       .wrap { padding: 0 24px; }
-      body::before { left: 24px; }
-      body::after { right: 24px; }
-      .nav-links { display: none; }
+      body::before, body::after { display: none; }
+      .nav-links, .nav-cta { display: none; }
+      .nav-hamburger { display: block; }
       .hero-quick-stats { flex-wrap: wrap; gap: 20px; }
       .hero-stat { border-left: none; padding-left: 0; }
       .skills-grid { grid-template-columns: 1fr; }
@@ -811,8 +836,22 @@
         <li><a href="#education">Education</a></li>
       </ul>
       <a href="#contact" class="nav-cta">Contact</a>
+      <button class="nav-hamburger" id="navHamburger" aria-label="Toggle menu">
+        <span class="material-symbols-rounded">menu</span>
+      </button>
     </div>
   </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-inner">
+      <a href="#skills" class="mobile-link">Skills</a>
+      <a href="#projects" class="mobile-link">Projects</a>
+      <a href="#certifications" class="mobile-link">Certifications</a>
+      <a href="#education" class="mobile-link">Education</a>
+      <a href="#contact" class="mobile-link">Contact</a>
+    </div>
+  </div>
 
   <main>
 
@@ -1299,6 +1338,24 @@
       entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
     }, { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+    // Mobile Menu Toggle
+    const hamburger = document.getElementById('navHamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    if (hamburger && mobileMenu) {
+      hamburger.addEventListener('click', () => {
+        mobileMenu.classList.toggle('open');
+        const icon = hamburger.querySelector('span');
+        icon.textContent = mobileMenu.classList.contains('open') ? 'close' : 'menu';
+      });
+      // Close menu when clicking a link
+      document.querySelectorAll('.mobile-link').forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.remove('open');
+          hamburger.querySelector('span').textContent = 'menu';
+        });
+      });
+    }
   </script>
 
 </body>
