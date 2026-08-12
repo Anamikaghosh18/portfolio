@@ -1,558 +1,1305 @@
 <!doctype html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Anamika Ghosh | Portfolio </title>
-  <meta name="description" content="Portfolio of Anamika Ghosh, Backend Engineer and GenAI Developer" />
+  <title>Anamika Ghosh</title>
+  <meta name="description" content="Portfolio of Anamika Ghosh, Backend Engineer and GenAI Developer specializing in RAG, LLMs and scalable ML systems." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap"
-    rel="stylesheet" />
-  <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" />
-  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" />
+  <style>
+    /* ─── DESIGN TOKENS ──────────────────────────────────── */
+    :root {
+      --ink:        #ffffff;
+      --ink-60:     rgba(255,255,255,0.6);
+      --ink-30:     rgba(255,255,255,0.3);
+      --ink-10:     rgba(255,255,255,0.1);
+      --ink-05:     rgba(255,255,255,0.05);
+      --ink-03:     rgba(255,255,255,0.03);
+      --border:     rgba(255,255,255,0.08);
+      --border-hi:  rgba(255,255,255,0.18);
+
+      --bg-base:    #0d0d0d;  /* grid layer */
+      --bg-body:    rgba(16,16,16,0.93); /* charcoal overlay */
+      --bg-card:    rgba(255,255,255,0.025);
+      --bg-card-hi: rgba(255,255,255,0.06);
+      --bg-warm:    rgba(255,255,255,0.018);
+
+      --accent:     #d4d4d4;
+
+      --shadow-sm:  0 2px 8px rgba(0,0,0,0.5);
+      --shadow-md:  0 8px 24px rgba(0,0,0,0.65);
+      --shadow-lg:  0 20px 48px rgba(0,0,0,0.8);
+
+      --r-sm:   8px;
+      --r-md:   14px;
+      --r-lg:   20px;
+      --r-xl:   32px;
+      --r-full: 9999px;
+
+      --ease:   cubic-bezier(.16,1,.3,1);
+      --fast:   .22s var(--ease);
+      --med:    .5s  var(--ease);
+
+      --nav-h:  60px;
+      --max:    1060px;
+    }
+
+    /* ─── RESET ──────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+    ul { list-style: none; }
+    button { cursor: pointer; background: none; border: none; }
+
+    /* ─── 3-LAYER BACKGROUND ─────────────────────────────── */
+    /* Layer 1 — grid (on html element) */
+    html {
+      scroll-behavior: smooth;
+      background-color: var(--bg-base);
+      background-image:
+        repeating-linear-gradient(90deg, transparent, transparent 79px, rgba(255,255,255,0.028) 79px, rgba(255,255,255,0.028) 80px),
+        repeating-linear-gradient(0deg,  transparent, transparent 79px, rgba(255,255,255,0.028) 79px, rgba(255,255,255,0.028) 80px);
+    }
+    /* Layer 2 — charcoal overlay (on body) */
+    body {
+      font-family: "Inter", system-ui, sans-serif;
+      background-color: var(--bg-body);
+      color: var(--ink);
+      font-size: 14.5px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      position: relative;
+    }
+    /* Layer 3 — vertical rail lines */
+    body::before,
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0; bottom: 0;
+      width: 1px;
+      background: linear-gradient(180deg,
+        transparent 0%,
+        var(--border) 8%,
+        var(--border) 92%,
+        transparent 100%
+      );
+      pointer-events: none;
+      z-index: 0;
+    }
+    body::before { left:  clamp(40px, 8vw, 120px); }
+    body::after  { right: clamp(40px, 8vw, 120px); }
+
+    /* ─── LAYOUT ─────────────────────────────────────────── */
+    .wrap {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 clamp(40px, 8vw, 120px);
+      position: relative;
+      z-index: 1;
+    }
+    section {
+      padding: clamp(40px, 6vw, 64px) 0;
+      position: relative;
+      z-index: 1;
+    }
+    #skills         { background: var(--bg-warm); }
+    #certifications { background: var(--bg-warm); }
+
+    /* ─── SCROLL PROGRESS ────────────────────────────────── */
+    #scrollProgress {
+      position: fixed; top: 0; left: 0;
+      height: 2px;
+      background: var(--ink-60);
+      width: 0%;
+      z-index: 200;
+      transition: width .1s linear;
+    }
+
+    /* ─── NAV ────────────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: var(--nav-h);
+      z-index: 100;
+      display: flex; align-items: center;
+      transition: background var(--fast), border-color var(--fast);
+    }
+    nav.solid {
+      background: rgba(13,13,13,0.88);
+      backdrop-filter: blur(20px) saturate(160%);
+      border-bottom: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+    }
+    .nav-inner {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 15px; font-weight: 800;
+      letter-spacing: -.02em;
+      color: var(--ink);
+    }
+    .nav-logo-mark {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--ink);
+    }
+    .nav-links {
+      display: flex; gap: 32px;
+    }
+    .nav-links a {
+      font-size: 12px; font-weight: 500;
+      letter-spacing: .04em; text-transform: uppercase;
+      color: var(--ink-60);
+      transition: color var(--fast);
+    }
+    .nav-links a:hover { color: var(--ink); }
+    .nav-cta {
+      padding: 7px 18px;
+      border-radius: var(--r-full);
+      border: 1px solid var(--border);
+      font-size: 11px; font-weight: 700;
+      letter-spacing: .06em; text-transform: uppercase;
+      color: var(--ink-60);
+      transition: all var(--fast);
+    }
+    .nav-cta:hover { border-color: var(--ink); color: var(--ink); background: var(--ink-05); }
+
+    /* ─── HERO SECTION ───────────────────────────────────── */
+    .hero-section {
+      padding-top: 0; /* banner goes behind transparent nav */
+      padding-bottom: clamp(32px, 5vw, 56px);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Cover banner */
+    .hero-cover {
+      width: 100%;
+      height: clamp(100px, 14vw, 180px);
+      background: #181818;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-cover::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        repeating-linear-gradient(90deg, transparent, transparent 59px, rgba(255,255,255,0.025) 59px, rgba(255,255,255,0.025) 60px),
+        repeating-linear-gradient(0deg,  transparent, transparent 59px, rgba(255,255,255,0.025) 59px, rgba(255,255,255,0.025) 60px);
+    }
+    .hero-cover::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 60px;
+      background: linear-gradient(to bottom, transparent, var(--bg-body));
+    }
+
+    /* Profile card container */
+    .hero-profile-wrap {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 clamp(40px, 8vw, 120px);
+    }
+    .hero-profile-card {
+      margin-top: -20px;
+      position: relative;
+      z-index: 2;
+      overflow: visible;
+    }
+
+    /* Top row: avatar + name + actions */
+    .hero-profile-top {
+      display: flex;
+      align-items: flex-end;
+      gap: clamp(14px, 2.5vw, 28px);
+      padding: clamp(14px, 2.5vw, 24px) 0;
+      border-bottom: 1px solid var(--border);
+      overflow: visible;
+    }
+    .hero-avatar-wrap {
+      position: relative;
+      flex-shrink: 0;
+      margin-top: clamp(-42px, -6vw, -60px);
+      z-index: 3;
+    }
+    .hero-avatar {
+      width: clamp(72px, 10vw, 118px);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #181818;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.7), 0 0 0 1px var(--border);
+      background: #1e1e1e;
+      display: block;
+    }
+    .hero-status {
+      position: absolute;
+      bottom: 2px; right: -6px;
+      background: #1c1c1c;
+      border: 1px solid var(--border-hi);
+      border-radius: var(--r-full);
+      padding: 3px 9px;
+      display: flex; align-items: center; gap: 5px;
+      font-size: 9.5px; font-weight: 600;
+      color: var(--ink-60);
+      white-space: nowrap;
+      box-shadow: var(--shadow-sm);
+    }
+    .status-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #2db87d;
+      box-shadow: 0 0 0 2px rgba(45,184,125,0.2);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 2px rgba(45,184,125,0.2); }
+      50%       { box-shadow: 0 0 0 5px rgba(45,184,125,0.04); }
+    }
+
+    .hero-meta { flex: 1; padding-bottom: 2px; }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 10px; font-weight: 700; letter-spacing: .13em;
+      text-transform: uppercase; color: var(--ink-30);
+      margin-bottom: 6px;
+    }
+    .hero-eyebrow::before {
+      content: ''; width: 14px; height: 1px;
+      background: currentColor;
+    }
+    .hero-name {
+      font-size: clamp(20px, 3vw, 32px);
+      font-weight: 800; letter-spacing: -.03em;
+      color: var(--ink); line-height: 1.05;
+      margin-bottom: 3px;
+    }
+    .hero-role {
+      font-size: clamp(12px, 1.3vw, 14px);
+      font-weight: 400; color: var(--ink-30);
+    }
+
+    .hero-actions {
+      display: flex; gap: 10px;
+      flex-wrap: wrap; align-items: center;
+      padding-bottom: 4px;
+      margin-left: auto;
+    }
+    .btn-primary {
+      padding: 9px 20px;
+      background: var(--ink); color: #111;
+      border: 1.5px solid var(--ink);
+      border-radius: var(--r-full);
+      font-size: 11.5px; font-weight: 700;
+      letter-spacing: .04em; text-transform: uppercase;
+      display: inline-flex; align-items: center; gap: 6px;
+      transition: all var(--fast);
+    }
+    .btn-primary:hover { background: transparent; color: var(--ink); transform: translateY(-2px); }
+    .btn-ghost {
+      padding: 9px 20px;
+      background: transparent; color: var(--ink-60);
+      border: 1.5px solid var(--border-hi);
+      border-radius: var(--r-full);
+      font-size: 11.5px; font-weight: 600;
+      letter-spacing: .04em; text-transform: uppercase;
+      transition: all var(--fast);
+    }
+    .btn-ghost:hover { border-color: var(--ink); color: var(--ink); transform: translateY(-2px); }
+
+    /* Bottom row: bio + stats */
+    .hero-profile-bottom {
+      display: flex;
+      align-items: center;
+      gap: clamp(24px, 5vw, 60px);
+      padding: clamp(14px, 2vw, 22px) 0;
+    }
+    .hero-desc {
+      flex: 1;
+      font-size: clamp(12.5px, 1.2vw, 14px);
+      font-weight: 300; color: var(--ink-30);
+      line-height: 1.7; max-width: 500px;
+    }
+    .hero-quick-stats {
+      display: flex;
+      gap: clamp(18px, 3vw, 36px);
+      flex-shrink: 0;
+      align-items: flex-start;
+    }
+    .hero-stat {
+      display: flex; flex-direction: column; gap: 2px;
+      border-left: 1px solid var(--border);
+      padding-left: 16px;
+    }
+    .hero-stat:first-child { border-left: none; padding-left: 0; }
+    .hero-stat-num {
+      font-size: 20px; font-weight: 800;
+      letter-spacing: -.02em; color: var(--ink); line-height: 1;
+    }
+    .hero-stat-label {
+      font-size: 9px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .1em;
+      color: var(--ink-30);
+    }
+
+    /* ─── SECTION HEADERS ────────────────────────────────── */
+    .section-label {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 10px; font-weight: 700; letter-spacing: .16em;
+      text-transform: uppercase; color: var(--ink-30);
+      margin-bottom: 10px;
+    }
+    .section-label::before {
+      content: ''; width: 14px; height: 1px;
+      background: currentColor;
+    }
+    .section-title {
+      font-size: clamp(20px, 2.5vw, 26px);
+      font-weight: 800; letter-spacing: -.03em;
+      line-height: 1.1; color: var(--ink);
+      margin-bottom: 6px;
+    }
+    .section-sub {
+      font-size: clamp(12.5px, 1.2vw, 14px);
+      font-weight: 300; color: var(--ink-60);
+      line-height: 1.5; margin-top: 6px;
+    }
+    .section-head { margin-bottom: clamp(20px, 3vw, 32px); }
+
+    /* ─── DIVIDER ────────────────────────────────────────── */
+    .divider {
+      width: 100%; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border-hi), transparent);
+    }
+
+    /* ─── GLASS CARD (shared utility) ────────────────────── */
+    .glass-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      backdrop-filter: blur(12px);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.04), var(--shadow-sm);
+      transition: all var(--fast);
+    }
+    .glass-card:hover {
+      border-color: var(--border-hi);
+      background: var(--bg-card-hi);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+
+    /* ─── SKILLS ─────────────────────────────────────────── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .skill-cell {
+      padding: 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      display: flex; flex-direction: column;
+      gap: 14px;
+      transition: all var(--fast);
+    }
+    .skill-cell:hover {
+      border-color: var(--border-hi);
+      background: var(--bg-card-hi);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+    .skill-cell-wide { grid-column: span 2; }
+    .skill-cell-wide .skill-cell-inner {
+      display: flex; gap: 24px; align-items: flex-start;
+    }
+    .skill-cell-full {
+      grid-column: span 3;
+      flex-direction: row; align-items: center; gap: 28px;
+    }
+    .skill-cell-icon {
+      font-family: "Material Symbols Rounded";
+      font-size: 22px; color: var(--ink-30);
+      transition: color var(--fast);
+      flex-shrink: 0;
+    }
+    .skill-cell:hover .skill-cell-icon { color: var(--ink-60); }
+    .skill-cell-name {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase;
+      color: var(--ink-60); margin-bottom: 10px;
+    }
+    .skill-cell-desc {
+      font-size: 12.5px; font-weight: 300;
+      color: var(--ink-30); line-height: 1.6;
+      margin-bottom: 14px;
+    }
+    .skill-info { flex: 1; }
+    .skill-tags {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      margin-top: auto;
+    }
+    .skill-tag {
+      padding: 3px 10px;
+      border-radius: var(--r-full);
+      font-size: 10px; font-weight: 700;
+      letter-spacing: .06em; text-transform: uppercase;
+      border: 1px solid var(--border);
+      color: var(--ink-30);
+      background: var(--ink-03);
+      transition: all var(--fast);
+    }
+    .skill-cell:hover .skill-tag {
+      border-color: var(--border-hi);
+      color: var(--ink-60);
+      background: var(--ink-05);
+    }
+
+    /* ─── PROJECTS ───────────────────────────────────────── */
+    .projects-filter {
+      display: flex; gap: 8px; flex-wrap: wrap;
+      margin-bottom: 36px;
+    }
+    .fchip {
+      padding: 7px 16px;
+      border-radius: var(--r-full);
+      font-size: 11px; font-weight: 700;
+      letter-spacing: .07em; text-transform: uppercase;
+      border: 1px solid var(--border);
+      background: var(--ink-03);
+      color: var(--ink-30);
+      cursor: pointer;
+      transition: all var(--fast);
+    }
+    .fchip:hover { border-color: var(--border-hi); color: var(--ink-60); background: var(--ink-05); }
+    .fchip.active { background: var(--ink); color: #111; border-color: var(--ink); }
+
+    .projects-grid {
+      display: flex;
+      gap: 18px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 16px;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .projects-grid::-webkit-scrollbar {
+      display: none;
+    }
+    .project-card {
+      width: 248px; flex: 0 0 auto;
+      scroll-snap-align: start;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      overflow: hidden;
+      display: flex; flex-direction: column;
+      transition: all var(--med);
+    }
+    .project-card:hover {
+      border-color: var(--border-hi);
+      background: var(--bg-card-hi);
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-md);
+    }
+    .project-card-img {
+      height: 116px;
+      background: #1c1c1c;
+      overflow: hidden;
+    }
+    .project-card-img img {
+      width: 100%; height: 100%; object-fit: cover;
+      filter: grayscale(100%) contrast(1.05);
+      transition: filter var(--med), transform var(--med);
+    }
+    .project-card:hover .project-card-img img {
+      filter: grayscale(0%);
+      transform: scale(1.05);
+    }
+    .project-card-body {
+      padding: 15px; flex: 1;
+      display: flex; flex-direction: column;
+    }
+    .project-card-meta {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .pill {
+      padding: 3px 9px; border-radius: var(--r-full);
+      font-size: 10px; font-weight: 800;
+      letter-spacing: .07em; text-transform: uppercase;
+    }
+    .pill-live {
+      background: var(--ink); color: #111;
+      display: inline-flex; align-items: center; gap: 5px;
+    }
+    .pill-live::before {
+      content: ''; width: 5px; height: 5px;
+      border-radius: 50%; background: #2db87d;
+      animation: livePulse 1.6s infinite;
+    }
+    @keyframes livePulse {
+      0%   { box-shadow: 0 0 0 0   rgba(45,184,125,0.6); }
+      70%  { box-shadow: 0 0 0 5px rgba(45,184,125,0);   }
+      100% { box-shadow: 0 0 0 0   rgba(45,184,125,0);   }
+    }
+    .pill-wip {
+      border: 1px solid var(--border-hi);
+      color: var(--ink-30); background: var(--ink-03);
+    }
+    .project-tech {
+      font-size: 10.5px; font-weight: 500;
+      color: var(--ink-30); letter-spacing: .03em;
+    }
+    .project-title {
+      font-size: 16px; font-weight: 700;
+      letter-spacing: -.01em; margin-bottom: 6px;
+      color: var(--ink);
+    }
+    .project-desc {
+      font-size: 12px; font-weight: 300;
+      color: var(--ink-60); line-height: 1.55;
+      flex: 1; margin-bottom: 14px;
+    }
+    .project-links { display: flex; gap: 8px; margin-top: auto; }
+    .plink {
+      flex: 1; padding: 7px;
+      border: 1px solid var(--border);
+      border-radius: var(--r-sm);
+      font-size: 11.5px; font-weight: 600;
+      text-align: center;
+      display: inline-flex; align-items: center; justify-content: center; gap: 5px;
+      color: var(--ink-60);
+      transition: all var(--fast);
+    }
+    .plink:hover { border-color: var(--ink); color: var(--ink); background: var(--ink-05); }
+    .plink.plink-fill { background: var(--ink); color: #111; border-color: var(--ink); }
+    .plink.plink-fill:hover { background: transparent; color: var(--ink); }
+
+    .sbtn {
+      width: 38px; height: 38px; border-radius: 50%;
+      border: 1px solid var(--border);
+      color: var(--ink-60);
+      display: grid; place-items: center;
+      transition: all var(--fast);
+    }
+    .sbtn:hover { border-color: var(--border-hi); color: var(--ink); background: var(--ink-05); }
+    .material-symbols-rounded {
+      font-family: "Material Symbols Rounded";
+      font-size: 16px; vertical-align: middle;
+    }
+
+    /* ─── CERTIFICATIONS ─────────────────────────────────── */
+    .certs-list { display: flex; flex-direction: column; gap: 10px; }
+    .cert-row {
+      display: flex; align-items: center; gap: 14px;
+      padding: 14px 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      transition: all var(--fast);
+    }
+    .cert-row:hover {
+      border-color: var(--border-hi);
+      background: var(--bg-card-hi);
+      transform: translateX(5px);
+      box-shadow: var(--shadow-md);
+    }
+    .cert-num {
+      font-size: 12px; color: var(--ink-30);
+      width: 20px; flex-shrink: 0;
+      font-weight: 600;
+    }
+    .cert-logo-box {
+      width: 38px; height: 38px; flex-shrink: 0;
+      border: 1px solid var(--border);
+      border-radius: var(--r-sm);
+      background: var(--ink-05);
+      display: grid; place-items: center; overflow: hidden;
+    }
+    .cert-logo-box img { width: 70%; height: 70%; object-fit: contain; }
+    .cert-info { flex: 1; min-width: 0; }
+    .cert-name {
+      font-size: 14px; font-weight: 600;
+      color: var(--ink); margin-bottom: 2px;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .cert-sub {
+      font-size: 11.5px; font-weight: 300; color: var(--ink-30);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .cert-link {
+      padding: 5px 12px;
+      border: 1px solid var(--border);
+      border-radius: var(--r-full);
+      font-size: 10.5px; font-weight: 600;
+      color: var(--ink-30);
+      display: inline-flex; align-items: center; gap: 4px;
+      transition: all var(--fast); flex-shrink: 0;
+    }
+    .cert-link:hover { border-color: var(--ink); color: var(--ink); background: var(--ink-05); }
+
+    /* ─── EDUCATION TIMELINE ─────────────────────────────── */
+    .timeline { max-width: 700px; }
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      gap: 28px;
+      padding-bottom: 36px;
+      position: relative;
+    }
+    .timeline-item:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      left: calc(110px + 14px - 1px); top: 8px; bottom: 0;
+      width: 1px;
+      background: linear-gradient(180deg, var(--border-hi) 0%, transparent 100%);
+    }
+    .timeline-year {
+      font-size: 10.5px; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase;
+      color: var(--ink-30); padding-top: 4px; text-align: right;
+    }
+    .timeline-body { position: relative; padding-left: 26px; }
+    .timeline-body::before {
+      content: '';
+      position: absolute; left: -8px; top: 5px;
+      width: 9px; height: 9px;
+      border-radius: 50%; background: var(--ink);
+      box-shadow: 0 0 0 3px var(--bg-body), 0 0 0 5px var(--border-hi);
+    }
+    .tl-degree {
+      font-size: 20px; font-weight: 700;
+      letter-spacing: -.01em; margin-bottom: 4px; color: var(--ink);
+    }
+    .tl-school {
+      font-size: 11px; font-weight: 800;
+      letter-spacing: .08em; text-transform: uppercase;
+      color: var(--ink-30); margin-bottom: 10px;
+    }
+    .tl-detail {
+      font-size: 13.5px; font-weight: 300;
+      color: var(--ink-30); line-height: 1.6;
+    }
+
+    /* ─── CONTACT ────────────────────────────────────────── */
+    .contact-box {
+      padding: clamp(36px, 6vw, 72px) 0;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: clamp(32px, 5vw, 64px);
+      align-items: center;
+    }
+    .contact-heading {
+      font-size: clamp(30px, 4.5vw, 56px);
+      font-weight: 800; letter-spacing: -.03em;
+      color: #ffffff; line-height: 1.05;
+      margin-bottom: 14px;
+    }
+    .contact-heading em { color: rgba(255,255,255,0.35); }
+    .contact-sub {
+      font-size: clamp(13.5px, 1.4vw, 15.5px);
+      font-weight: 300; line-height: 1.7;
+      color: rgba(255,255,255,0.4);
+    }
+    .contact-actions { display: flex; flex-direction: column; gap: 12px; min-width: 200px; }
+    .cbtn {
+      padding: 13px 26px; border-radius: var(--r-full);
+      font-size: 13px; font-weight: 600;
+      letter-spacing: .04em; text-transform: uppercase;
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+      transition: all var(--fast);
+    }
+    .cbtn-white {
+      background: #ffffff; color: #111;
+      border: 1.5px solid #ffffff;
+    }
+    .cbtn-white:hover { background: transparent; color: #ffffff; }
+    .cbtn-outline {
+      background: transparent; color: rgba(255,255,255,0.6);
+      border: 1.5px solid rgba(255,255,255,0.2);
+    }
+    .cbtn-outline:hover { border-color: #ffffff; color: #ffffff; background: rgba(255,255,255,0.06); }
+
+    /* ─── FOOTER ─────────────────────────────────────────── */
+    footer {
+      padding: 28px 0;
+      border-top: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .footer-brand { font-size: 15px; font-weight: 800; letter-spacing: -.02em; }
+    .footer-copy { font-size: 11.5px; color: var(--ink-30); }
+
+    /* ─── FAB ────────────────────────────────────────────── */
+    #fab {
+      position: fixed; bottom: 28px; right: 28px;
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--ink); color: #111;
+      display: grid; place-items: center;
+      box-shadow: var(--shadow-md);
+      opacity: 0; visibility: hidden;
+      transform: translateY(10px);
+      transition: all var(--fast); z-index: 99;
+    }
+    #fab.show { opacity: 1; visibility: visible; transform: translateY(0); }
+    #fab:hover { transform: translateY(-3px); }
+
+    /* ─── REVEAL ANIMATIONS ──────────────────────────────── */
+    .reveal {
+      opacity: 0; transform: translateY(18px);
+      transition: opacity .6s var(--ease), transform .6s var(--ease);
+    }
+    .reveal.in { opacity: 1; transform: none; }
+    .reveal-d1 { transition-delay: .08s; }
+    .reveal-d2 { transition-delay: .16s; }
+    .reveal-d3 { transition-delay: .24s; }
+
+    /* ─── RESPONSIVE ─────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .hero-profile-top    { flex-wrap: wrap; }
+      .hero-actions        { margin-left: 0; width: 100%; }
+      .hero-profile-bottom { flex-direction: column; align-items: flex-start; gap: 16px; }
+      .skills-grid         { grid-template-columns: repeat(2,1fr); }
+      .skill-cell-wide     { grid-column: span 2; }
+      .skill-cell-full     { grid-column: span 2; flex-direction: column; }
+      .contact-box         { grid-template-columns: 1fr; }
+      .contact-actions     { flex-direction: row; flex-wrap: wrap; }
+      .timeline-item       { grid-template-columns: 80px 1fr; gap: 16px; }
+    }
+    @media (max-width: 640px) {
+      .wrap { padding: 0 24px; }
+      body::before { left: 24px; }
+      body::after { right: 24px; }
+      .nav-links { display: none; }
+      .hero-quick-stats { flex-wrap: wrap; gap: 20px; }
+      .hero-stat { border-left: none; padding-left: 0; }
+      .skills-grid { grid-template-columns: 1fr; }
+      .skill-cell-wide, .skill-cell-full { grid-column: span 1; }
+      .skill-cell-wide .skill-cell-inner { flex-direction: column; gap: 12px; }
+      .timeline-item { grid-template-columns: 1fr; }
+      .timeline-year { text-align: left; }
+      .timeline-item::after { display: none; }
+      footer { flex-direction: column; gap: 6px; }
+    }
+  </style>
 </head>
-
 <body>
-  <div class="ambient-bg">
-    <div class="ambient-blob blob-1"></div>
-    <div class="ambient-blob blob-2"></div>
-    <div class="ambient-blob blob-3"></div>
-    <div class="ambient-blob blob-4"></div>
-  </div>
-  <nav class="app-bar" id="appBar">
-    <a href="#" class="app-title">
-      <div class="g-dots">
-        <div class="g-dot bg-blue"></div>
-        <div class="g-dot bg-red"></div>
-        <div class="g-dot bg-yellow"></div>
-        <div class="g-dot bg-green"></div>
-      </div>
-      AG.
-    </a>
-    <div class="nav-items">
-      <a href="#about" class="nav-item">About</a>
-      <a href="#skills" class="nav-item">Skills</a>
-      <a href="#projects" class="nav-item">Projects</a>
-      <a href="#certifications" class="nav-item">Certifications</a>
-      <a href="#education" class="nav-item">Education</a>
 
+  <div id="scrollProgress"></div>
 
-      <a href="#contact" class="btn btn-tonal m-l-8">Contact</a>
+  <!-- NAV -->
+  <nav id="nav">
+    <div class="wrap nav-inner">
+      <a href="#" class="nav-logo">
+        <div class="nav-logo-mark"></div>
+        AG.
+      </a>
+      <ul class="nav-links">
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#certifications">Certifications</a></li>
+        <li><a href="#education">Education</a></li>
+      </ul>
+      <a href="#contact" class="nav-cta">Contact</a>
     </div>
-    <button class="menu-btn">
-      <span class="material-symbols-rounded">menu</span>
-    </button>
   </nav>
 
-  <div class="container">
-    <!-- Hero Section -->
-    <section class="hero">
-      <div class="hero-blobs">
-        <div class="blob-1"></div>
-        <div class="blob-2"></div>
-        <div class="hero-shape hero-shape-triangle"></div>
-        <div class="hero-shape hero-shape-square"></div>
-        <div class="hero-shape hero-shape-ring"></div>
-      </div>
-      <div>
-        <h4 class="display-large animate-fade-in-up m-b-24">
-          Hi, I'm Anamika <br /><span class="color-primary">Backend & AI Engineer.</span>
-        </h4>
-        <p class="body-large animate-fade-in-up max-w-600 m-b-32 delay-200">
-          Engineering intelligent systems through robust data pipelines and
-          scalable machine learning solutions. I specialize in Generative AI
-          and ML architecture.
-        </p>
+  <main>
 
-        <div class="hero-actions animate-fade-in-up delay-1000">
-          <a href="#contact" class="btn btn-filled">
-            <span class="material-symbols-rounded">mail</span> Get in Touch
-          </a>
-          <a href="resume.pdf" target="_blank" class="btn btn-outlined">
-            <span class="material-symbols-rounded">description</span> Resume
-          </a>
-        </div>
-        <div class="hero-contacts animate-fade-in-up delay-600">
-          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=anamikaghosh.work@gmail.com" target="_blank"
-            class="contact-link"><span class="material-symbols-rounded">alternate_email</span>
-            anamikaghosh.work@gmail.com</a>
-          <a href="https://github.com/Anamikaghosh18" target="_blank" class="contact-link"><span
-              class="material-symbols-rounded">code</span> GitHub</a>
-          <a href="https://linkedin.com/in/anamikaghosh18" target="_blank" class="contact-link"><span
-              class="material-symbols-rounded">person_search</span>
-            LinkedIn</a>
+    <!-- ── HERO ── -->
+    <div class="hero-section">
+
+      <!-- Cover Banner -->
+      <div class="hero-cover"></div>
+
+      <!-- Profile Card -->
+      <div class="hero-profile-wrap">
+        <div class="hero-profile-card">
+
+          <!-- Top: avatar + name + CTA -->
+          <div class="hero-profile-top">
+            <div class="hero-avatar-wrap">
+              <img src="images/professional image.jpeg" alt="Anamika Ghosh" class="hero-avatar"
+                onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><rect width=\'100%25\' height=\'100%25\' fill=\'%231e1e1e\'/><text x=\'50\' y=\'55\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-size=\'36\' fill=\'%23ffffff\' font-family=\'Inter,sans-serif\'>AG</text></svg>'" />
+            </div>
+
+            <div class="hero-meta">
+              <div class="hero-eyebrow">Final Year CS Student</div>
+              <h1 class="hero-name">Anamika Ghosh</h1>
+              <p class="hero-role">Backend Developer &middot; AI Enthusiast &middot; Builder</p>
+            </div>
+
+            <div class="hero-actions">
+              <a href="#contact" class="btn-primary">
+                <span class="material-symbols-rounded" style="font-size:14px">mail</span>
+                Get in Touch
+              </a>
+              <a href="resume.pdf" target="_blank" class="btn-ghost">View Resume</a>
+            </div>
+          </div>
+
+          <!-- Bottom: bio + stats -->
+          <div class="hero-profile-bottom">
+            <p class="hero-desc">I'm a final-year student passionate about building real things. I spend most of my time exploring GenAI, tweaking backend architectures, and figuring out how to make intelligent systems actually work in practice.</p>
+            <div class="hero-quick-stats">
+              <div class="hero-stat">
+                <span class="hero-stat-num">4+</span>
+                <span class="hero-stat-label">Projects</span>
+              </div>
+              <div class="hero-stat">
+                <span class="hero-stat-num">8.1</span>
+                <span class="hero-stat-label">CGPA</span>
+              </div>
+              <div class="hero-stat">
+                <span class="hero-stat-num">4+</span>
+                <span class="hero-stat-label">Certs</span>
+              </div>
+              <div class="hero-stat">
+                <span class="hero-stat-num">3+</span>
+                <span class="hero-stat-label">Yrs Code</span>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
-      <div class="avatar-container animate-fade-in-up">
-        <div class="avatar-deco"></div>
-        <div class="avatar-deco-2"></div>
-        <img src="images/professional image.jpg" alt="Anamika Ghosh" class="avatar" onerror="
-              this.src =
-                'data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><rect width=\'100\' height=\'100\' fill=\'%23d3e3fd\'/><text x=\'50\' y=\'50\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-size=\'40\' fill=\'%230b57d0\' font-family=\'sans-serif\'>AG</text></svg>'
-            " />
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- ── SKILLS ── -->
+    <section id="skills">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="section-label reveal">Technical Skills</div>
+          <h2 class="section-title reveal reveal-d1">Tools I build with.</h2>
+        </div>
+        <div class="skills-grid reveal reveal-d2">
+
+          <!-- Core Languages — spans 2 cols -->
+          <div class="skill-cell skill-cell-wide">
+            <div class="skill-cell-inner">
+              <div>
+                <span class="material-symbols-rounded skill-cell-icon">terminal</span>
+              </div>
+              <div class="skill-info">
+                <div class="skill-cell-name">Core Languages</div>
+                <p class="skill-cell-desc">The languages I rely on day-to-day for everything from quick scripts to full-stack applications.</p>
+                <div class="skill-tags">
+                  <span class="skill-tag">Python</span>
+                  <span class="skill-tag">Java</span>
+                  <span class="skill-tag">C++</span>
+                  <span class="skill-tag">SQL</span>
+                  <span class="skill-tag">JavaScript</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ML / AI -->
+          <div class="skill-cell">
+            <span class="material-symbols-rounded skill-cell-icon">hub</span>
+            <div>
+              <div class="skill-cell-name">ML / AI Frameworks</div>
+              <div class="skill-tags">
+                <span class="skill-tag">PyTorch</span>
+                <span class="skill-tag">LangChain</span>
+                <span class="skill-tag">Scikit-learn</span>
+                <span class="skill-tag">HuggingFace</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Backend -->
+          <div class="skill-cell">
+            <span class="material-symbols-rounded skill-cell-icon">dns</span>
+            <div>
+              <div class="skill-cell-name">Backend &amp; Web</div>
+              <div class="skill-tags">
+                <span class="skill-tag">FastAPI</span>
+                <span class="skill-tag">Node.js</span>
+                <span class="skill-tag">React</span>
+                <span class="skill-tag">REST APIs</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Databases -->
+          <div class="skill-cell">
+            <span class="material-symbols-rounded skill-cell-icon">database</span>
+            <div>
+              <div class="skill-cell-name">Data &amp; Vector Search</div>
+              <div class="skill-tags">
+                <span class="skill-tag">PostgreSQL</span>
+                <span class="skill-tag">Pinecone</span>
+                <span class="skill-tag">ChromaDB</span>
+                <span class="skill-tag">MySQL</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- DevOps -->
+          <div class="skill-cell">
+            <span class="material-symbols-rounded skill-cell-icon">build</span>
+            <div>
+              <div class="skill-cell-name">DevOps &amp; MLOps</div>
+              <div class="skill-tags">
+                <span class="skill-tag">Docker</span>
+                <span class="skill-tag">Git</span>
+                <span class="skill-tag">MLflow</span>
+                <span class="skill-tag">CI/CD</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Specialisms — full width -->
+          <div class="skill-cell skill-cell-full">
+            <span class="material-symbols-rounded skill-cell-icon" style="font-size:28px">psychology</span>
+            <div class="skill-info">
+              <div class="skill-cell-name">Advanced Specialisms &amp; Research</div>
+              <p class="skill-cell-desc" style="margin-bottom:10px">What I'm exploring right now: learning how to build custom RAG pipelines, fine-tune models, and integrate AI into functional software.</p>
+              <div class="skill-tags">
+                <span class="skill-tag">RAG Pipelines</span>
+                <span class="skill-tag">Fine-tuning</span>
+                <span class="skill-tag">GNN</span>
+                <span class="skill-tag">NLP</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
       </div>
     </section>
 
-    <!-- About Section -->
-    <section id="about" class="text-center">
-      <div class="section-content-centered">
-        <div class="section-header animate-fade-in-up">
-          <div class="header-deco deco-sm-rect"></div>
-          <div class="header-deco deco-md-pill"></div>
-          <h2 class="headline-medium m-b-0">
-            Know About Me
-          </h2>
+    <div class="divider"></div>
+
+    <!-- ── PROJECTS ── -->
+    <section id="projects">
+      <div class="wrap">
+        <div class="section-head" style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:12px">
+          <div>
+            <div class="section-label reveal">Work</div>
+            <h2 class="section-title reveal reveal-d1">Selected Projects.</h2>
+            <p class="section-sub reveal reveal-d2">Things I've built while learning, experimenting, and breaking code.</p>
+          </div>
+          <div style="display:flex;gap:8px" class="reveal reveal-d2">
+            <button id="projectPrev" class="sbtn" aria-label="Previous">
+              <span class="material-symbols-rounded">arrow_back</span>
+            </button>
+            <button id="projectNext" class="sbtn" aria-label="Next">
+              <span class="material-symbols-rounded">arrow_forward</span>
+            </button>
+          </div>
         </div>
-        <p class="body-large animate-fade-in-up m-t-24 delay-200">
-          I am a Backend & AI Engineer dedicated to bridging the gap between high-performance systems and
-          intelligent algorithms. My focus lies in designing scalable architectures that leverage the
-          power of Machine Learning to solve complex, real-world problems.
-        </p>
-        <p class="body-large animate-fade-in-up delay-400">
-          I thrive at the intersection of systems engineering and AI. Whether it's architecting RAG
-          pipelines, fine-tuning models for specific domains, or deploying highly concurrent backend
-          services — I care deeply about building end-to-end solutions that are robust, efficient, and
-          production-ready.
-        </p>
+
+        <div class="projects-filter reveal reveal-d2">
+          <button class="fchip active" data-filter="all">All</button>
+          <button class="fchip" data-filter="ml">AI / ML</button>
+          <button class="fchip" data-filter="web">Web Dev</button>
+        </div>
+
+        <div class="projects-grid" id="projectsGrid">
+
+          <div class="project-card reveal" data-category="web">
+            <div class="project-card-img">
+              <img src="images/interviewr.png" alt="Interviewr" onerror="this.parentElement.style.background='#1c1c1c'" />
+            </div>
+            <div class="project-card-body">
+              <div class="project-card-meta">
+                <span class="pill pill-live">Live</span>
+                <span class="project-tech">Node.js · React</span>
+              </div>
+              <h3 class="project-title">Interviewr</h3>
+              <p class="project-desc">AI platform for technical interview prep with automated code analysis and real-time feedback.</p>
+              <div class="project-links">
+                <a href="https://github.com/Anamikaghosh18/Interviewr" target="_blank" class="plink">
+                  <span class="material-symbols-rounded">code</span> Source
+                </a>
+                <a href="https://interviewr-one.vercel.app/" target="_blank" class="plink plink-fill">
+                  <span class="material-symbols-rounded">rocket_launch</span> Demo
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="project-card reveal reveal-d1" data-category="web">
+            <div class="project-card-img">
+              <img src="images/analytica.png" alt="Analytica" onerror="this.parentElement.style.background='#1c1c1c'" />
+            </div>
+            <div class="project-card-body">
+              <div class="project-card-meta">
+                <span class="pill pill-live">Live</span>
+                <span class="project-tech">FastAPI · LangChain</span>
+              </div>
+              <h3 class="project-title">Analytica</h3>
+              <p class="project-desc">Intelligence-driven API monitoring platform with anomaly detection and LLM-powered insights.</p>
+              <div class="project-links">
+                <a href="https://github.com/Anamikaghosh18/analytica" target="_blank" class="plink">
+                  <span class="material-symbols-rounded">code</span> Source
+                </a>
+                <a href="https://analytica-gules.vercel.app/" target="_blank" class="plink plink-fill">
+                  <span class="material-symbols-rounded">rocket_launch</span> Demo
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="project-card reveal reveal-d2" data-category="ml">
+            <div class="project-card-img">
+              <img src="images/GNN.png" alt="Fraud Detection" onerror="this.parentElement.style.background='#1c1c1c'" />
+            </div>
+            <div class="project-card-body">
+              <div class="project-card-meta">
+                <span class="pill pill-wip">In Progress</span>
+                <span class="project-tech">PyTorch · MLflow</span>
+              </div>
+              <h3 class="project-title">Fraud Detection</h3>
+              <p class="project-desc">Graph Neural Network system to detect fraudulent financial transactions with high precision.</p>
+              <div class="project-links">
+                <a href="https://github.com/Anamikaghosh18/GNN-based-Fraud-Detection-System" target="_blank" class="plink plink-fill">
+                  <span class="material-symbols-rounded">code</span> Source
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="project-card reveal reveal-d3" data-category="ml">
+            <div class="project-card-img">
+              <img src="images/airsense.png" alt="AirSense" onerror="this.parentElement.style.background='#1c1c1c'" />
+            </div>
+            <div class="project-card-body">
+              <div class="project-card-meta">
+                <span class="pill pill-live">Live</span>
+                <span class="project-tech">Scikit-learn · FastAPI</span>
+              </div>
+              <h3 class="project-title">AirSense AI</h3>
+              <p class="project-desc">Analyzes global air quality trends using advanced AI models with interactive visualizations.</p>
+              <div class="project-links">
+                <a href="https://github.com/Anamikaghosh18/AirSense" target="_blank" class="plink">
+                  <span class="material-symbols-rounded">code</span> Source
+                </a>
+                <a href="https://airsenseintelligentsystem.streamlit.app/" target="_blank" class="plink plink-fill">
+                  <span class="material-symbols-rounded">rocket_launch</span> Demo
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
       </div>
     </section>
 
-    <!-- Section Divider -->
-    <div class="section-divider">
-      <div class="divider-line"></div>
-      <div class="divider-graphic">
-        <div class="divider-dot"></div>
-        <span class="material-symbols-rounded divider-icon">code</span>
-        <div class="divider-dot"></div>
-      </div>
-    </div>
+    <div class="divider"></div>
 
-    <!-- Skills Section -->
-    <section id="skills" class="text-center">
-      <div class="section-header animate-fade-in-up">
-        <div class="header-deco deco-sm-circle"></div>
-        <div class="header-deco deco-dots"></div>
-        <h2 class="headline-medium m-b-0">
-          Technical Skills
-        </h2>
-      </div>
-      <p class="body-large animate-fade-in-up delay-200">
-        Tools, languages, and frameworks I leverage daily.
-      </p>
-
-      <div class="skills-grid animate-fade-in-up delay-400">
-        <div class="google-card skill-group">
-          <h3 class="title-large">
-            <div class="skill-icon">
-              <span class="material-symbols-rounded">terminal</span>
-            </div>
-            Languages
-          </h3>
-          <div class="chips-wrapper">
-            <span class="chip chip-assist">Python</span><span class="chip chip-assist">Java</span><span
-              class="chip chip-assist">C++</span><span class="chip chip-assist">SQL</span><span
-              class="chip chip-assist">JavaScript</span>
-          </div>
+    <!-- ── CERTIFICATIONS ── -->
+    <section id="certifications">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="section-label reveal">Credentials</div>
+          <h2 class="section-title reveal reveal-d1">Certifications.</h2>
         </div>
-        <div class="google-card skill-group">
-          <h3 class="title-large">
-            <div class="skill-icon">
-              <span class="material-symbols-rounded">dns</span>
-            </div>
-            Frameworks
-          </h3>
-          <div class="chips-wrapper">
-            <span class="chip chip-assist">PyTorch</span><span class="chip chip-assist">LangChain</span><span
-              class="chip chip-assist">Scikit-learn</span><span class="chip chip-assist">FastAPI</span><span
-              class="chip chip-assist">Node.js</span><span class="chip chip-assist">React</span>
-          </div>
-        </div>
-        <div class="google-card skill-group">
-          <h3 class="title-large">
-            <div class="skill-icon">
-              <span class="material-symbols-rounded">build</span>
-            </div>
-            Tools & Technologies
-          </h3>
-          <div class="chips-wrapper">
-            <span class="chip chip-assist">Docker</span><span class="chip chip-assist">MLflow</span><span
-              class="chip chip-assist">Git</span><span class="chip chip-assist">CI/CD</span>
-          </div>
-        </div>
-      </div>
-  </div>
-  </section>
+        <div class="certs-list reveal reveal-d2">
 
-  <!-- Section Divider -->
-  <div class="section-divider">
-    <div class="divider-line"></div>
-    <div class="divider-graphic">
-      <div class="divider-dot"></div>
-      <span class="material-symbols-rounded divider-icon">rocket_launch</span>
-      <div class="divider-dot"></div>
-    </div>
-  </div> <!-- Projects Section -->
-  <!-- Projects Section -->
-  <section id="projects" class="text-center">
-    <div class="section-header animate-fade-in-up">
-      <div class="header-deco deco-md-box"></div>
-      <h2 class="headline-medium m-b-0">Projects Built</h2>
-    </div>
-    <p class="body-large animate-fade-in-up delay-200 m-b-24">
-      Showcasing my work in AI, Fullstack, and Backend systems.
-    </p>
-
-    <!-- Filter Controls -->
-    <div class="projects-filter-container animate-fade-in-up delay-300 m-b-32">
-      <button class="filter-chip active" data-filter="all">All Projects</button>
-      <button class="filter-chip" data-filter="ml">AI / ML</button>
-      <button class="filter-chip" data-filter="web">Web Dev</button>
-    </div>
-
-    <div class="modern-carousel animate-fade-in-up delay-400">
-      <button class="modern-nav-btn prev" id="projectPrev" aria-label="Previous">
-        <span class="material-symbols-rounded">chevron_left</span>
-      </button>
-
-      <div class="modern-scroll-track" id="projectsTrack">
-        <!-- 1. Interviewr -->
-        <div class="modern-card" data-category="web">
-          <div class="modern-card-banner">
-            <img src="images/interviewr.png" alt="Interviewr" />
-          </div>
-          <div class="modern-card-content">
-            <div class="project-meta">
-              <span class="badge badge-live">Live</span>
+          <div class="cert-row">
+            <div class="cert-num">01</div>
+            <div class="cert-logo-box">
+              <img src="images/automation.png" alt="Automation Anywhere" onerror="this.parentElement.innerHTML='<span style=font-size:16px>🤖</span>'" />
             </div>
-            <h3 class="title-large">Interviewr</h3>
-            <p class="body-medium">AI platform for technical interview prep with automated code analysis.</p>
-            <div class="project-tags">
-              <span class="project-tag">Node.js</span><span class="project-tag">React</span>
+            <div class="cert-info">
+              <div class="cert-name">Automation Anywhere</div>
+              <div class="cert-sub">Mastery of RPA fundamentals and bot creation</div>
             </div>
-            <div class="project-links">
-              <a href="https://github.com/Anamikaghosh18/Interviewr" target="_blank" class="project-btn">
-                <span class="material-symbols-rounded">code</span> Source
-              </a>
-              <a href="https://interviewr-one.vercel.app/" target="_blank" class="project-btn">
-                <span class="material-symbols-rounded">rocket_launch</span> Live
-              </a>
-            </div>
-          </div>
-        </div>
-        <!-- 2. Analytica -->
-        <div class="modern-card" data-category="web">
-          <div class="modern-card-banner">
-            <img src="images/analytica.png" alt="Analytica" />
-          </div>
-          <div class="modern-card-content">
-            <div class="project-meta">
-              <span class="badge badge-live">Live</span>
-            </div>
-            <h3 class="title-large">Analytica</h3>
-            <p class="body-medium">Intelligence-driven API monitoring platform with anomaly detection.</p>
-            <div class="project-tags">
-              <span class="project-tag">FastAPI</span><span class="project-tag">LangChain</span>
-            </div>
-            <div class="project-links">
-              <a href="https://github.com/Anamikaghosh18/analytica" target="_blank" class="project-btn">
-                <span class="material-symbols-rounded">code</span> Source
-              </a>
-              <a href="https://analytica-gules.vercel.app/" target="_blank" class="project-btn">
-                <span class="material-symbols-rounded">rocket_launch</span> Live
-              </a>
-            </div>
-          </div>
-        </div>
-        <!-- 3. Fraud Detection -->
-        <div class="modern-card" data-category="ml">
-          <div class="modern-card-banner">
-            <img src="images/GNN.png" alt="Fraud Detection" />
-          </div>
-          <div class="modern-card-content">
-            <div class="project-meta">
-              <span class="badge badge-wip">WIP</span>
-            </div>
-            <h3 class="title-large">Fraud Detection</h3>
-            <p class="body-medium">Graph Neural Network (GNN) based system to detect fraudulent transactions.</p>
-            <div class="project-tags">
-              <span class="project-tag">PyTorch</span><span class="project-tag">MLflow</span>
-            </div>
-            <div class="project-links">
-              <a href="https://github.com/Anamikaghosh18/GNN-based-Fraud-Detection-System" target="_blank"
-                class="project-btn">
-                <span class="material-symbols-rounded">code</span> Source
-              </a>
-            </div>
-          </div>
-        </div>
-        <!-- 4. AirSense -->
-        <div class="modern-card" data-category="ml">
-          <div class="modern-card-banner">
-            <img src="images/airsense.png" alt="AirSense" />
-          </div>
-          <div class="modern-card-content">
-            <div class="project-meta">
-              <span class="badge badge-live">Live</span>
-            </div>
-            <h3 class="title-large">AirSense AI</h3>
-            <p class="body-medium">Analyzes global air quality trends using advanced AI models.</p>
-            <div class="project-tags">
-              <span class="project-tag">Scikit-learn</span><span class="project-tag">FastAPI</span>
-            </div>
-            <div class="project-links">
-              <a href="https://github.com/Anamikaghosh18/AirSense" target="_blank" class="project-btn">
-                <span class="material-symbols-rounded">code</span> Source
-              </a>
-              <a href="https://airsenseintelligentsystem.streamlit.app/" target="_blank" class="project-btn">
-                <span class="material-symbols-rounded">rocket_launch</span> Live
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <button class="modern-nav-btn next" id="projectNext" aria-label="Next">
-        <span class="material-symbols-rounded">chevron_right</span>
-      </button>
-    </div>
-  </section>
-
-  <!-- Section Divider -->
-  <div class="section-divider">
-    <div class="divider-line"></div>
-    <div class="divider-graphic">
-      <div class="divider-dot"></div>
-      <span class="material-symbols-rounded divider-icon">verified</span>
-      <div class="divider-dot"></div>
-    </div>
-  </div> <!-- Certifications Section -->
-  <section id="certifications" class="text-center">
-    <div class="section-header animate-fade-in-up">
-      <div class="header-deco deco-dots cert-header-deco-dots"></div>
-      <div class="header-deco deco-sm-circle cert-header-deco-circle"></div>
-      <h2 class="headline-medium m-b-0">Certifications</h2>
-    </div>
-    <p class="body-large animate-fade-in-up delay-200 m-b-32">
-      Verified expertise and industry credentials.
-    </p>
-
-    <div class="modern-carousel animate-fade-in-up delay-400">
-      <button class="modern-nav-btn prev" id="certPrev" aria-label="Previous">
-        <span class="material-symbols-rounded">chevron_left</span>
-      </button>
-
-      <div class="modern-scroll-track" id="certificationsTrack">
-        <!-- 1. Automation Anywhere -->
-        <div class="modern-card">
-          <div class="modern-card-banner" style="background: white;">
-            <img src="images/automation.png" alt="Automation Anywhere" style="object-fit: contain; width: 70%;" />
-          </div>
-          <div class="modern-card-content">
-            <h3 class="title-large">Automation Anywhere</h3>
-            <p class="body-medium">Mastery of RPA fundamentals and bot creation.</p>
-            <a href="https://certificates.automationanywhere.com/9ae38350-233d-4c0f-a484-72083c713630" target="_blank"
-              class="project-btn" style="margin-top: auto; justify-content: center;">
-              <span class="material-symbols-rounded">verified_user</span> View Credential
+            <a href="https://certificates.automationanywhere.com/9ae38350-233d-4c0f-a484-72083c713630" target="_blank" class="cert-link">
+              <span class="material-symbols-rounded" style="font-size:12px">verified</span> View
             </a>
           </div>
-        </div>
-        <!-- 2. OCI Gen AI -->
-        <div class="modern-card">
-          <div class="modern-card-banner" style="background: white;">
-            <img src="images/oracle.png" alt="OCI Generative AI" style="object-fit: contain; width: 70%;" />
-          </div>
-          <div class="modern-card-content">
-            <h3 class="title-large">OCI Generative AI</h3>
-            <p class="body-medium">Advanced expertise in LLMs and RAG solutions.</p>
-            <a href="https://catalog-education.oracle.com/ords/certview/sharebadge?id=239C1C850330F0CB4EBB46C0D69385475E6AA053977DB4573A6B70808FBDB127"
-              target="_blank" class="project-btn" style="margin-top: auto; justify-content: center;">
-              <span class="material-symbols-rounded">verified_user</span> View Credential
+
+          <div class="cert-row">
+            <div class="cert-num">02</div>
+            <div class="cert-logo-box">
+              <img src="images/oracle.png" alt="Oracle" onerror="this.parentElement.innerHTML='<span style=font-size:16px>☁️</span>'" />
+            </div>
+            <div class="cert-info">
+              <div class="cert-name">OCI Generative AI</div>
+              <div class="cert-sub">Advanced expertise in LLMs and RAG solutions · Oracle</div>
+            </div>
+            <a href="https://catalog-education.oracle.com/ords/certview/sharebadge?id=239C1C850330F0CB4EBB46C0D69385475E6AA053977DB4573A6B70808FBDB127" target="_blank" class="cert-link">
+              <span class="material-symbols-rounded" style="font-size:12px">verified</span> View
             </a>
           </div>
-        </div>
-        <!-- 3. OCI AI Foundations -->
-        <div class="modern-card">
-          <div class="modern-card-banner" style="background: white;">
-            <img src="images/oracle.png" alt="OCI AI Foundations" style="object-fit: contain; width: 70%;" />
-          </div>
-          <div class="modern-card-content">
-            <h3 class="title-large">OCI AI Foundations</h3>
-            <p class="body-medium">Machine Learning and AI services by Oracle Cloud.</p>
-            <a href="https://catalog-education.oracle.com/ords/certview/sharebadge?id=239C1C850330F0CB4EBB46C0D69385475E6AA053977DB4573A6B70808FBDB127"
-              target="_blank" class="project-btn" style="margin-top: auto; justify-content: center;">
-              <span class="material-symbols-rounded">verified_user</span> View Credential
+
+          <div class="cert-row">
+            <div class="cert-num">03</div>
+            <div class="cert-logo-box">
+              <img src="images/oracle.png" alt="Oracle" onerror="this.parentElement.innerHTML='<span style=font-size:16px>☁️</span>'" />
+            </div>
+            <div class="cert-info">
+              <div class="cert-name">OCI AI Foundations</div>
+              <div class="cert-sub">Machine Learning and AI services · Oracle Cloud</div>
+            </div>
+            <a href="https://catalog-education.oracle.com/ords/certview/sharebadge?id=239C1C850330F0CB4EBB46C0D69385475E6AA053977DB4573A6B70808FBDB127" target="_blank" class="cert-link">
+              <span class="material-symbols-rounded" style="font-size:12px">verified</span> View
             </a>
           </div>
-        </div>
-        <!-- 4. Postman API -->
-        <div class="modern-card">
-          <div class="modern-card-banner" style="background: white;">
-            <img src="images/postman.png" alt="Postman API Expert" style="object-fit: contain; width: 70%;" />
+
+          <div class="cert-row">
+            <div class="cert-num">04</div>
+            <div class="cert-logo-box">
+              <img src="images/postman.png" alt="Postman" onerror="this.parentElement.innerHTML='<span style=font-size:16px>🔧</span>'" />
+            </div>
+            <div class="cert-info">
+              <div class="cert-name">Postman API Expert</div>
+              <div class="cert-sub">Proficiency in API testing and documentation</div>
+            </div>
+            <a href="https://www.linkedin.com/in/anamikaghosh18/" target="_blank" class="cert-link">
+              <span class="material-symbols-rounded" style="font-size:12px">verified</span> View
+            </a>
           </div>
-          <div class="modern-card-content">
-            <h3 class="title-large">Postman API Expert</h3>
-            <p class="body-medium">Proficiency in API testing and documentation.</p>
-            <a href="https://www.linkedin.com/in/anamikaghosh18/overlay/Certifications/334379349/treasury/?profileId=ACoAAEVOykwBjO_frt00gqnmXNSezb0eGaN8QjQ"
-              target="_blank" class="project-btn" style="margin-top: auto; justify-content: center;">
-              <span class="material-symbols-rounded">verified_user</span> View Credential
+
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ── EDUCATION ── -->
+    <section id="education">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="section-label reveal">Background</div>
+          <h2 class="section-title reveal reveal-d1">Education.</h2>
+        </div>
+        <div class="timeline">
+
+          <div class="timeline-item reveal">
+            <div class="timeline-year">2023 — Present</div>
+            <div class="timeline-body">
+              <div class="tl-degree">B.Tech — Computer Science</div>
+              <div class="tl-school">Lovely Professional University</div>
+              <div class="tl-detail">CGPA 8.11 · Deep Learning, NLP, Reinforcement Learning &amp; Distributed Systems.</div>
+            </div>
+          </div>
+
+          <div class="timeline-item reveal reveal-d1">
+            <div class="timeline-year">2021 — 2023</div>
+            <div class="timeline-body">
+              <div class="tl-degree">Senior Secondary</div>
+              <div class="tl-school">Jawahar Navodaya Vidyalaya</div>
+              <div class="tl-detail">84% · PCM stream.</div>
+            </div>
+          </div>
+
+          <div class="timeline-item reveal reveal-d2">
+            <div class="timeline-year">2019 — 2021</div>
+            <div class="timeline-body">
+              <div class="tl-degree">Higher Secondary</div>
+              <div class="tl-school">Jawahar Navodaya Vidyalaya</div>
+              <div class="tl-detail">94.6%</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ── CONTACT ── -->
+    <section id="contact">
+      <div class="wrap">
+        <div class="contact-box reveal">
+          <div>
+            <h2 class="contact-heading">Let's build<br><em>something.</em></h2>
+            <p class="contact-sub">I'm currently looking for junior roles and always open to talking about tech or side projects. If you're building something cool, I'd love to hear about it.</p>
+          </div>
+          <div class="contact-actions">
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=anamikaghosh.work@gmail.com" target="_blank" class="cbtn cbtn-white">
+              <span class="material-symbols-rounded" style="font-size:16px">mail</span>
+              Send Email
+            </a>
+            <a href="https://linkedin.com/in/anamikaghosh18" target="_blank" class="cbtn cbtn-outline">
+              <span class="material-symbols-rounded" style="font-size:16px">arrow_outward</span>
+              LinkedIn
+            </a>
+            <a href="https://github.com/Anamikaghosh18" target="_blank" class="cbtn cbtn-outline">
+              <span class="material-symbols-rounded" style="font-size:16px">code</span>
+              GitHub
             </a>
           </div>
         </div>
       </div>
+    </section>
 
-      <button class="modern-nav-btn next" id="certNext" aria-label="Next">
-        <span class="material-symbols-rounded">chevron_right</span>
-      </button>
-  </section>
+  </main>
 
-  <!-- Section Divider -->
-  <div class="section-divider">
-    <div class="divider-line"></div>
-    <div class="divider-graphic">
-      <div class="divider-dot"></div>
-      <span class="material-symbols-rounded divider-icon">school</span>
-      <div class="divider-dot"></div>
-    </div>
+  <!-- FOOTER -->
+  <div class="wrap">
+    <footer>
+      <div class="footer-brand">AG.</div>
+      <div class="footer-copy">© 2025 Anamika Ghosh. Designed with intent.</div>
+    </footer>
   </div>
 
-  <!-- Education Section -->
-  <section id="education">
-    <div class="section-header animate-fade-in-up">
-      <div class="header-deco deco-sm-rect edu-header-deco-rect"></div>
-      <h2 class="headline-medium m-b-0">Education</h2>
-    </div>
-    <div class="timeline animate-fade-in-up delay-200">
-      <div class="timeline-item">
-        <div class="timeline-marker"></div>
-        <div class="timeline-date">2023 — Present</div>
-        <h3 class="title-large">B.Tech — CSE</h3>
-        <p class="label-large">Lovely Professional University</p>
-        <p class="body-medium m-t-8">
-          CGPA: 8.11. <br />
-          Focused on Deep Learning, Natural Language Processing,
-          Reinforcement Learning, and Distributed Systems.
-        </p>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-marker marker-outline"></div>
-        <div class="timeline-date">2021 — 2023</div>
-        <h3 class="title-large">Senior Secondary</h3>
-        <p class="label-large">Jawahar Navodaya Vidyalaya</p>
-        <p class="body-medium m-t-8">
-          Percentage: 84%. <br />
-          Completed with PCM stream.
-        </p>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-marker marker-outline"></div>
-        <div class="timeline-date">2019 — 2021</div>
-        <h3 class="title-large">Higher Secondary</h3>
-        <p class="label-large">Jawahar Navodaya Vidyalaya</p>
-        <p class="body-medium m-t-8">
-          Percentage: 94.6%. <br />
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Section Divider -->
-  <div class="section-divider">
-    <div class="divider-line"></div>
-    <div class="divider-graphic">
-      <div class="divider-dot"></div>
-      <span class="material-symbols-rounded divider-icon">contact_mail</span>
-      <div class="divider-dot"></div>
-    </div>
-  </div>
-
-  <!-- Contact Section -->
-  <section id="contact">
-    <div class="contact-section">
-      <div class="contact-shapes">
-        <span class="contact-shape circle"></span>
-        <span class="contact-shape square"></span>
-        <span class="contact-shape pill"></span>
-        <span class="contact-shape ring"></span>
-        <span class="contact-shape triangle"></span>
-      </div>
-      <div class="animate-fade-in-left align-start flex-column">
-        <h2 class="display-large contact-title animate-fade-in-up contact-title-large delay-200">
-          Let's build<br />something.
-        </h2>
-        <p class="body-large animate-fade-in-up contact-p-large delay-400"
-          style="margin-left: auto; margin-right: auto;">
-          Open to new opportunities, collaborations and side projects. Would
-          love to ideate and create some meaningful impact together.
-        </p>
-        <div class="social-links animate-fade-in-up text-center delay-600">
-          <a href="https://github.com/Anamikaghosh18" target="_blank" class="social-btn github-btn" title="GitHub">
-            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
-              <path
-                d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-            </svg>
-          </a>
-          <a href="https://linkedin.com/in/anamikaghosh18" target="_blank" class="social-btn linkedin-btn"
-            title="LinkedIn">
-            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
-              <path
-                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-            </svg>
-          </a>
-          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=anamikaghosh.work@gmail.com" target="_blank"
-            class="social-btn email-btn" title="Email">
-            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
-              <path
-                d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
-            </svg>
-          </a>
-        </div>
-      </div>
-      <div class="animate-fade-in-right">
-        <div class="surface-card bg-white-90 text-center">
-          <span class="material-symbols-rounded icon-filled icon-large">mail</span>
-          <h3 class="title-large">Get in Touch</h3>
-          <p class="body-medium m-b-24">
-            Drop an email and I'll get back to you as soon as possible.
-          </p>
-          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=anamikaghosh.work@gmail.com" target="_blank"
-            class="project-btn" style="width: 100%; justify-content: center;">
-            <span class="material-symbols-rounded">send</span> Send an Email
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <footer class="footer-container">
-    <div class="container">
-      <div class="g-dots m-b-16" style="justify-content: center;">
-        <div class="g-dot bg-blue"></div>
-        <div class="g-dot bg-red"></div>
-        <div class="g-dot bg-yellow"></div>
-        <div class="g-dot bg-green"></div>
-      </div>
-      <p>&copy; 2025 Anamika Ghosh. Built with <span class="material-symbols-rounded"
-          style="font-size: 14px; vertical-align: middle; color: var(--google-red);">favorite</span>.</p>
-    </div>
-  </footer>
-  </div>
-
-  <!-- Floating Action Button -->
-  <button class="fab ripple" onclick="scrollToTop()" aria-label="Scroll to top">
-    <span class="material-symbols-rounded">keyboard_arrow_up</span>
+  <!-- FAB -->
+  <button id="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">
+    <span class="material-symbols-rounded" style="font-size:20px;font-family:'Material Symbols Rounded'">keyboard_arrow_up</span>
   </button>
 
-  <script src="main.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    const nav = document.getElementById('nav');
+    const fab = document.getElementById('fab');
+    const progress = document.getElementById('scrollProgress');
 
-  <!-- Game-style Effects -->
-  <div class="game-scanlines"></div>
-  <div class="game-glow"></div>
-  <div class="game-cursor-trail" id="cursorTrail"></div>
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      nav.classList.toggle('solid', y > 40);
+      fab.classList.toggle('show', y > 400);
+      const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      if (progress) progress.style.width = (h > 0 ? (y / h) * 100 : 0) + '%';
+    }, { passive: true });
+
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const t = document.querySelector(a.getAttribute('href'));
+        if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+      });
+    });
+
+    document.querySelectorAll('.fchip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        document.querySelectorAll('.fchip').forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        const f = chip.dataset.filter;
+        document.querySelectorAll('.project-card').forEach(card => {
+          const show = f === 'all' || card.dataset.category === f;
+          card.style.display = show ? 'flex' : 'none';
+        });
+      });
+    });
+
+    const grid = document.getElementById('projectsGrid');
+    const prev = document.getElementById('projectPrev');
+    const next = document.getElementById('projectNext');
+    if (grid && prev && next) {
+      prev.addEventListener('click', () => grid.scrollBy({ left: -268, behavior: 'smooth' }));
+      next.addEventListener('click', () => grid.scrollBy({ left:  268, behavior: 'smooth' }));
+    }
+
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  </script>
+
 </body>
-
 </html>
