@@ -5,126 +5,22 @@ document.addEventListener("DOMContentLoaded", () => {
     window.scrollTo(0, 0);
   }
 
-  // ─── DATA ────────────────────────────────────────────────
-  const data = {
-    hero: {
-      points: [
-        "backend and ai/ml mostly, but honestly whatever the problem needs — i just like turning an idea into something that actually runs.",
-        "i spend a lot of my free time messing with code — breaking things, poking at random ideas, and every so often something useful comes out of it.",
-        "right now i'm deep in <strong>ai agents, rag, and distributed systems</strong> — trying to actually understand how this stuff works under the hood, not just how to use it.",
-      ],
-    },
-    skills: [
-      "Python",
-      "Java",
-      "FastAPI",
-      "PyTorch",
-      "scikit-learn",
-      "LangChain",
-      "PostgreSQL",
-      "MongoDB",
-      "Docker",
-    ],
-    projects: [
-      {
-        title: "Analytica",
-        cat: "web",
-        tag: "Live",
-        tagType: "live",
-        desc: "an api monitoring tool that flags anomalies and uses an llm to actually explain what's going wrong, instead of just throwing an alert at you and leaving you to figure it out.",
-        stack: "FastAPI · LangChain",
-        links: [
-          {
-            text: "Source →",
-            url: "https://github.com/Anamikaghosh18/analytica",
-          },
-          { text: "Demo →", url: "https://analytica-gules.vercel.app/" },
-        ],
-        img: "analytica.png",
-      },
-      {
-        title: "Fraud Detection",
-        cat: "ml",
-        tag: "In progress",
-        tagType: "wip",
-        desc: "a graph neural network for spotting fraud in financial transactions — the bet is that fraud often shows up in how accounts are connected, not just in one suspicious transaction.",
-        stack: "PyTorch · MLflow",
-        links: [
-          {
-            text: "Source →",
-            url: "https://github.com/Anamikaghosh18/GNN-based-Fraud-Detection-System",
-          },
-        ],
-        img: "GNN.png",
-      },
-      {
-        title: "AirSense AI",
-        cat: "ml",
-        tag: "Live",
-        tagType: "live",
-        desc: "tracks global air quality trends with a couple of ai models behind it, and lays it all out in charts you can actually dig into instead of a static report.",
-        stack: "scikit-learn · FastAPI",
-        links: [
-          {
-            text: "Source →",
-            url: "https://github.com/Anamikaghosh18/AirSense",
-          },
-          {
-            text: "Demo →",
-            url: "https://airsenseintelligentsystem.streamlit.app/",
-          },
-        ],
-        img: "airsense.png",
-      },
-    ],
-    experience: [
-      {
-        role: "AI/ML Intern",
-        company: "Infosys Springboard",
-        date: "Jun 2024 – Aug 2024",
-        bullets: [
-          "built a document summarization pipeline with huggingface transformers that cut review time by about 40%.",
-          "fine-tuned a bert model to pull named entities out of financial documents.",
-          "wrapped it up as a fastapi microservice and shipped it with docker.",
-        ],
-        tags: ["Python", "Transformers", "FastAPI"],
-      },
-      {
-        role: "Data Science Intern",
-        company: "Edunet Foundation (IBM)",
-        date: "Jan 2024 – Apr 2024",
-        bullets: [
-          "built a model to predict student performance, pulling data with sql and training it with scikit-learn.",
-          "put together interactive plotly dashboards so we could actually see the learning patterns in the data.",
-          "worked with a team of 5 to get a prototype adaptive learning platform out the door.",
-        ],
-        tags: ["SQL", "scikit-learn", "Plotly"],
-      },
-    ],
-    education: [
-      {
-        year: "2023 — Present",
-        degree: "B.Tech — Computer Science",
-        school: "Lovely Professional University",
-        detail:
-          "figuring my way through backend and ai/ml — i tend to turn whatever idea catches my interest into something i can actually build and break.",
-      },
-      {
-        year: "2021 — 2023",
-        degree: "Senior Secondary (PCM)",
-        school: "Jawahar Navodaya Vidyalaya",
-        detail:
-          "where i first realized i actually liked breaking problems down and thinking them through logically.",
-      },
-      {
-        year: "2019 — 2021",
-        degree: "Higher Secondary",
-        school: "Jawahar Navodaya Vidyalaya",
-        detail:
-          "this is where the basics stuck — still shapes how i think about problems and solve today.",
-      },
-    ],
+  let data = null;
+  const certIcons = {
+    "Automation Anywhere": `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="#A9225C" style="width:28px;height:28px;">
+                        <path d="M12 2L2 22h4l2-4h8l2 4h4L12 2zm-2 12l2-6 2 6h-4z"/>
+                        <circle cx="12" cy="14" r="2.5" fill="#0d0d0d" stroke="#A9225C" stroke-width="1.5"/>
+                      </svg>`,
+    "OCI Generative AI": `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="#F80000" style="width:28px;height:28px;">
+                        <path d="M16.1 5.4H7.9C4.2 5.4 1.2 8.4 1.2 12s3 6.6 6.7 6.6h8.2c3.7 0 6.7-3 6.7-6.6s-3-6.6-6.7-6.6zm0 10.8H7.9c-2.3 0-4.2-1.9-4.2-4.2s1.9-4.2 4.2-4.2h8.2c2.3 0 4.2 1.9 4.2 4.2s-1.9 4.2-4.2 4.2z"/>
+                      </svg>`,
+    "OCI AI Foundations": `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="#F80000" style="width:28px;height:28px;">
+                        <path d="M16.1 5.4H7.9C4.2 5.4 1.2 8.4 1.2 12s3 6.6 6.7 6.6h8.2c3.7 0 6.7-3 6.7-6.6s-3-6.6-6.7-6.6zm0 10.8H7.9c-2.3 0-4.2-1.9-4.2-4.2s1.9-4.2 4.2-4.2h8.2c2.3 0 4.2 1.9 4.2 4.2s-1.9 4.2-4.2 4.2z"/>
+                      </svg>`,
   };
+  const defaultCertIcon = `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="#9aa0a6" style="width:28px;height:28px;">
+                        <path d="M12 2l2.2 4.5 5 .7-3.6 3.5.85 5-4.45-2.3-4.45 2.3.85-5L4.8 7.2l5-.7L12 2z"/>
+                      </svg>`;
 
   // ─── RENDER FUNCTIONS ──────────────────────────────────────
 
@@ -135,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
     container.innerHTML = `
             <div class="hero-top-flex">
                 <div class="hero-avatar">
-                    <img src="images/professional image.jpeg" alt="Anamika Ghosh" onerror="this.remove()" />
+                    <img src="images/professional-image.jpeg" alt="Anamika Ghosh" fetchpriority="high" decoding="async" onerror="this.remove()" />
                 </div>
                 <div class="hero-name-col">
                     <div class="name-row">
@@ -147,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             </svg>
                         </span>
                     </div>
-                    <div class="hero-role mono">software engineer </div>
+                    <div class="hero-role mono">software engineer</div>
                 </div>
             </div>
             <ul class="hero-points">${pointsHtml}</ul>
@@ -177,7 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     </svg>
                     <span>LinkedIn</span>
                 </a>
-                
+
             </div>
         `;
   }
@@ -199,7 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const logos = data.skills
       .map((skill) => {
         const icon = iconMap[skill] || "simpleicons/default";
-        return `<span class="skill-logo-item"><img src="https://cdn.simpleicons.org/${icon}" alt="" />${skill}</span>`;
+        return `<span class="skill-logo-item"><img src="https://cdn.simpleicons.org/${icon}" alt="" loading="lazy" decoding="async" width="17" height="17" />${skill}</span>`;
       })
       .join("");
     container.innerHTML = `
@@ -230,7 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return `
                     <div class="proj-entry" data-cat="${p.cat}" data-index="${index}">
                         <div class="proj-thumb">
-                            <img src="images/${p.img}" alt="${p.title}" onerror="this.style.display='none'" />
+                            <img src="images/${p.img}" alt="${p.title}" loading="lazy" decoding="async" width="120" height="120" onerror="this.style.display='none'" />
                         </div>
                         <div>
                             <div class="proj-top">
@@ -406,38 +302,12 @@ document.addEventListener("DOMContentLoaded", () => {
   function renderCertifications() {
     const container = document.getElementById("certifications-container");
     if (!container) return;
-    const certs = [
-      {
-        name: "Automation Anywhere",
-        sub: "RPA fundamentals and bot creation",
-        link: "https://certificates.automationanywhere.com/9ae38350-233d-4c0f-a484-72083c713630",
-        svg: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="#A9225C" style="width:28px;height:28px;">
-                        <path d="M12 2L2 22h4l2-4h8l2 4h4L12 2zm-2 12l2-6 2 6h-4z"/>
-                        <circle cx="12" cy="14" r="2.5" fill="#0d0d0d" stroke="#A9225C" stroke-width="1.5"/>
-                      </svg>`,
-      },
-      {
-        name: "OCI Generative AI",
-        sub: "LLMs and RAG solutions · Oracle",
-        link: "https://catalog-education.oracle.com/ords/certview/sharebadge?id=E51DC57A08CA7F5C85B3B6DFE2B588E9A124407DF1025FAD5018358707C87211",
-        svg: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="#F80000" style="width:28px;height:28px;">
-                        <path d="M16.1 5.4H7.9C4.2 5.4 1.2 8.4 1.2 12s3 6.6 6.7 6.6h8.2c3.7 0 6.7-3 6.7-6.6s-3-6.6-6.7-6.6zm0 10.8H7.9c-2.3 0-4.2-1.9-4.2-4.2s1.9-4.2 4.2-4.2h8.2c2.3 0 4.2 1.9 4.2 4.2s-1.9 4.2-4.2 4.2z"/>
-                      </svg>`,
-      },
-      {
-        name: "OCI AI Foundations",
-        sub: "Machine learning and AI services · Oracle Cloud",
-        link: "https://catalog-education.oracle.com/ords/certview/sharebadge?id=239C1C850330F0CB4EBB46C0D69385475E6AA053977DB4573A6B70808FBDB127",
-        svg: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="#F80000" style="width:28px;height:28px;">
-                        <path d="M16.1 5.4H7.9C4.2 5.4 1.2 8.4 1.2 12s3 6.6 6.7 6.6h8.2c3.7 0 6.7-3 6.7-6.6s-3-6.6-6.7-6.6zm0 10.8H7.9c-2.3 0-4.2-1.9-4.2-4.2s1.9-4.2 4.2-4.2h8.2c2.3 0 4.2 1.9 4.2 4.2s-1.9 4.2-4.2 4.2z"/>
-                      </svg>`,
-      },
-    ];
+    const certs = data.certifications || [];
     const listHtml = certs
       .map(
         (cert) => `
                     <div class="cert-row">
-                        <div class="cert-logo-box">${cert.svg}</div>
+                        <div class="cert-logo-box">${certIcons[cert.name] || defaultCertIcon}</div>
                         <div class="cert-info">
                             <div class="cert-name">${cert.name}</div>
                             <div class="cert-sub">${cert.sub}</div>
@@ -457,13 +327,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const container = document.getElementById("contact-container");
     if (!container) return;
     container.innerHTML = `
-           <h2 class="contact-heading">let's build something.</h2>
-<p class="contact-sub">
-    i'm looking for <strong>freelance work, internships, and new-grad roles</strong>
-    where i get to build things, keep learning, and dig into problems that are actually interesting.
-    if you're working on something cool — or just want to talk ai/ml, backend systems,
-    or random project ideas — reach out, i'd genuinely like to hear about it.
-</p>
+            <h2 class="contact-heading">let's build something.</h2>
+            <p class="contact-sub">
+                i'm looking for <strong>freelance work, internships, and new-grad roles</strong>
+                where i get to build things, keep learning, and dig into problems that are actually interesting.
+                if you're working on something cool — or just want to talk ai/ml, backend systems,
+                or random project ideas — reach out, i'd genuinely like to hear about it.
+            </p>
             <div class="hero-actions">
                 <a href="https://mail.google.com/mail/?view=cm&fs=1&to=anamikaghosh.work@gmail.com" target="_blank" rel="noopener" class="hero-action">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="#EA4335">
@@ -518,7 +388,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const pick = quotes[Math.floor(Math.random() * quotes.length)];
     block.innerHTML = `
             <div class="quote-block">
-                <span class="quote-mark">“</span>
+                <span class="quote-mark">"</span>
                 <p class="quote-text">${pick.text}</p>
                 <div class="quote-cite">— ${pick.author}</div>
             </div>
@@ -526,42 +396,67 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ─── INIT ──────────────────────────────────────────────────
-  renderHero();
-  renderSkills();
-  renderProjects();
-  renderBlogs();
-  renderExperience();
-  renderEducation();
-  renderCertifications();
-  renderContact();
-  renderQuote();
+  function renderAll() {
+    renderHero();
+    renderSkills();
+    renderProjects();
+    renderBlogs();
+    renderExperience();
+    renderEducation();
+    renderCertifications();
+    renderContact();
+    renderQuote();
+    attachPostRenderBehavior();
+  }
 
-  // ─── SMOOTH SCROLL ──────────────────────────────────────
-  document.querySelectorAll('a[href^="#"]').forEach((a) => {
-    a.addEventListener("click", (e) => {
-      const t = document.querySelector(a.getAttribute("href"));
-      if (t) {
-        e.preventDefault();
-        t.scrollIntoView({ behavior: "smooth", block: "start" });
+  fetch("data.json")
+    .then((res) => {
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return res.json();
+    })
+    .then((json) => {
+      data = json;
+      renderAll();
+    })
+    .catch((error) => {
+      console.error(
+        "Couldn't load data.json — check it exists next to index.html and that you're running this through a local server (not opened directly as a file://).",
+        error,
+      );
+      const hero = document.getElementById("hero-section");
+      if (hero) {
+        hero.innerHTML =
+          '<p style="color:var(--ink-60);">Content failed to load. Check the console for details.</p>';
       }
     });
-  });
 
-  // ─── SECTION TITLE FADE UP ─────────────────────────────
-  document.querySelectorAll(".section-title").forEach((title) => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.style.animation = "fadeUp 0.8s ease forwards";
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.15 },
-    );
-    observer.observe(title);
-  });
+  // ─── SMOOTH SCROLL + SECTION FADE-UP (run once content is rendered) ──
+  function attachPostRenderBehavior() {
+    document.querySelectorAll('a[href^="#"]').forEach((a) => {
+      a.addEventListener("click", (e) => {
+        const t = document.querySelector(a.getAttribute("href"));
+        if (t) {
+          e.preventDefault();
+          t.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      });
+    });
+
+    document.querySelectorAll(".section-title").forEach((title) => {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.style.animation = "fadeUp 0.8s ease forwards";
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.15 },
+      );
+      observer.observe(title);
+    });
+  }
 
   // ─── HAMBURGER MENU (safe) ─────────────────────────────
   const hamburger = document.getElementById("hamburger");
