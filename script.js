@@ -9,9 +9,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const data = {
     hero: {
       points: [
-        "i build things with <strong>backend, ai/ml, and a bit of everything</strong> — turning interesting ideas into working code.",
-        "i love <strong>tinkering with code</strong> — breaking things, exploring random ideas, and sometimes building something useful.",
-        "right now, i'm learning more about <strong>ai agents, rag, and distributed systems</strong> — how intelligent systems work, and what's next to learn.",
+        "backend and ai/ml mostly, but honestly whatever the problem needs — i just like turning an idea into something that actually runs.",
+        "i spend a lot of my free time messing with code — breaking things, poking at random ideas, and every so often something useful comes out of it.",
+        "right now i'm deep in <strong>ai agents, rag, and distributed systems</strong> — trying to actually understand how this stuff works under the hood, not just how to use it.",
       ],
     },
     skills: [
@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
         cat: "web",
         tag: "Live",
         tagType: "live",
-        desc: "intelligence-driven api monitoring with anomaly detection & llm insights. catches issues before they break things.",
+        desc: "an api monitoring tool that flags anomalies and uses an llm to actually explain what's going wrong, instead of just throwing an alert at you and leaving you to figure it out.",
         stack: "FastAPI · LangChain",
         links: [
           {
@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
         cat: "ml",
         tag: "In progress",
         tagType: "wip",
-        desc: "graph neural network system to detect fraudulent financial transactions. exploring how relationships reveal hidden patterns.",
+        desc: "a graph neural network for spotting fraud in financial transactions — the bet is that fraud often shows up in how accounts are connected, not just in one suspicious transaction.",
         stack: "PyTorch · MLflow",
         links: [
           {
@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
         cat: "ml",
         tag: "Live",
         tagType: "live",
-        desc: "analyzes global air quality trends using ai models with interactive visualizations. making climate data accessible.",
+        desc: "tracks global air quality trends with a couple of ai models behind it, and lays it all out in charts you can actually dig into instead of a static report.",
         stack: "scikit-learn · FastAPI",
         links: [
           {
@@ -83,9 +83,9 @@ document.addEventListener("DOMContentLoaded", () => {
         company: "Infosys Springboard",
         date: "Jun 2024 – Aug 2024",
         bullets: [
-          "built a document summarization pipeline using huggingface transformers, reducing review time by 40%.",
-          "fine-tuned a bert-based model for named entity recognition on financial data.",
-          "deployed the service as a fastapi microservice with docker.",
+          "built a document summarization pipeline with huggingface transformers that cut review time by about 40%.",
+          "fine-tuned a bert model to pull named entities out of financial documents.",
+          "wrapped it up as a fastapi microservice and shipped it with docker.",
         ],
         tags: ["Python", "Transformers", "FastAPI"],
       },
@@ -94,9 +94,9 @@ document.addEventListener("DOMContentLoaded", () => {
         company: "Edunet Foundation (IBM)",
         date: "Jan 2024 – Apr 2024",
         bullets: [
-          "developed a predictive model for student performance using sql and scikit-learn.",
-          "designed interactive dashboards with plotly to visualize learning patterns.",
-          "collaborated with a team of 5 to deliver a prototype for an adaptive learning platform.",
+          "built a model to predict student performance, pulling data with sql and training it with scikit-learn.",
+          "put together interactive plotly dashboards so we could actually see the learning patterns in the data.",
+          "worked with a team of 5 to get a prototype adaptive learning platform out the door.",
         ],
         tags: ["SQL", "scikit-learn", "Plotly"],
       },
@@ -107,21 +107,21 @@ document.addEventListener("DOMContentLoaded", () => {
         degree: "B.Tech — Computer Science",
         school: "Lovely Professional University",
         detail:
-          "learning my way through backend, AI/ML and distributed systems, with a habit of turning interesting ideas into things i can actually build and experiment with.",
+          "figuring my way through backend and ai/ml — i tend to turn whatever idea catches my interest into something i can actually build and break.",
       },
       {
         year: "2021 — 2023",
         degree: "Senior Secondary (PCM)",
         school: "Jawahar Navodaya Vidyalaya",
         detail:
-          "focused on PCM — where i first discovered my love for logical reasoning and breaking down complex problems.",
+          "where i first realized i actually liked breaking problems down and thinking them through logically.",
       },
       {
         year: "2019 — 2021",
         degree: "Higher Secondary",
         school: "Jawahar Navodaya Vidyalaya",
         detail:
-          "built a strong foundation that continues to shape how i approach problems, systems and code today.",
+          "this is where the basics stuck — still shapes how i think about problems and solve today.",
       },
     ],
   };
@@ -147,7 +147,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             </svg>
                         </span>
                     </div>
-                    <div class="hero-role mono">backend developer · ai/ml builder</div>
+                    <div class="hero-role mono">software engineer </div>
                 </div>
             </div>
             <ul class="hero-points">${pointsHtml}</ul>
@@ -457,13 +457,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const container = document.getElementById("contact-container");
     if (!container) return;
     container.innerHTML = `
-            <h2 class="contact-heading">let's build something.</h2>
-            <p class="contact-sub">
-                i'm open to <strong>freelance projects, internships, and new-grad opportunities</strong>
-                where i can build, learn, and solve interesting problems.
-                if you have something you're working on — or just want to talk about
-                ai/ml, backend systems, or ideas worth building — i'd love to hear from you.
-            </p>
+           <h2 class="contact-heading">let's build something.</h2>
+<p class="contact-sub">
+    i'm looking for <strong>freelance work, internships, and new-grad roles</strong>
+    where i get to build things, keep learning, and dig into problems that are actually interesting.
+    if you're working on something cool — or just want to talk ai/ml, backend systems,
+    or random project ideas — reach out, i'd genuinely like to hear about it.
+</p>
             <div class="hero-actions">
                 <a href="https://mail.google.com/mail/?view=cm&fs=1&to=anamikaghosh.work@gmail.com" target="_blank" rel="noopener" class="hero-action">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="#EA4335">

@@ -1,74 +1,104 @@
 <!doctype html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Anamika | Portfolio</title>
-    <meta name="description" content="Portfolio of Anamika Ghosh, backend developer and AI/ML builder." />
+    <meta
+      name="description"
+      content="Portfolio of Anamika Ghosh, backend developer and AI/ML builder."
+    />
     <link rel="icon" type="image/png" href="/images/favicon.png" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://cdn.simpleicons.org" crossorigin />
+    <link rel="preconnect" href="https://dev.to" crossorigin />
+
+    <link rel="preload" as="image" href="images/hero_banner.png" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="style.css" />
-</head>
-<body>
+  </head>
+  <body>
     <nav>
-        <div class="nav-inner">
-            <a href="#" class="nav-logo">AG.</a>
-            <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
-                <span class="hamburger-line"></span>
-                <span class="hamburger-line"></span>
-                <span class="hamburger-line"></span>
-            </button>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#projects">projects</a></li>
-                <li><a href="#blogs">blogs</a></li>
-                <li><a href="#education">education</a></li>
-                <li><a href="#certifications">certifications</a></li>
-                <li><a href="#contact">contact</a></li>
-            </ul>
-        </div>
+      <div class="nav-inner">
+        <a href="#" class="nav-logo">AG.</a>
+        <button
+          class="hamburger"
+          id="hamburger"
+          aria-label="Toggle menu"
+          aria-expanded="false"
+        >
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="#projects">projects</a></li>
+          <li><a href="#blogs">blogs</a></li>
+          <li><a href="#education">education</a></li>
+          <li><a href="#certifications">certifications</a></li>
+          <li><a href="#contact">contact</a></li>
+        </ul>
+      </div>
     </nav>
 
     <main class="page">
-        <!-- Hero Banner -->
-        <div class="hero-banner"></div>
+      <!-- Hero Banner -->
+      <div class="hero-banner"></div>
 
-        <!-- Hero Section -->
+      <!-- Hero Section -->
+      <div class="wrap">
+        <section class="hero" id="hero-section">
+          <!-- populated by js -->
+        </section>
+      </div>
+
+      <!-- Skills -->
+      <section id="skills">
         <div class="wrap">
-            <section class="hero" id="hero-section">
-                <!-- populated by js -->
-            </section>
+          <div id="skills-container"></div>
         </div>
+      </section>
 
-        <!-- Skills -->
-        <section id="skills">
-            <div class="wrap">
-                <div id="skills-container"></div>
-            </div>
-        </section>
+      <!-- Projects -->
+      <section id="projects">
+        <div class="wrap">
+          <div id="projects-container"></div>
+          <div style="margin-top: 32px; text-align: center">
+            <a
+              href="https://github.com/Anamikaghosh18"
+              target="_blank"
+              rel="noopener"
+              class="hero-action"
+              style="display: inline-flex"
+            >
+              <img
+                src="https://cdn.simpleicons.org/github/FFFFFF"
+                alt="GitHub"
+                loading="lazy"
+                decoding="async"
+                width="16"
+                height="16"
+              />
+              <span>view all projects →</span>
+            </a>
+          </div>
+        </div>
+      </section>
 
-        <!-- Projects -->
-        <section id="projects">
-            <div class="wrap">
-                <div id="projects-container"></div>
-                <div style="margin-top: 32px; text-align: center">
-                    <a href="https://github.com/Anamikaghosh18" target="_blank" rel="noopener" class="hero-action" style="display: inline-flex">
-                        <img src="https://cdn.simpleicons.org/github/FFFFFF" alt="GitHub" />
-                        <span>view all projects →</span>
-                    </a>
-                </div>
-            </div>
-        </section>
+      <!-- Blogs -->
+      <section id="blogs">
+        <div class="wrap">
+          <div id="blogs-container"></div>
+        </div>
+      </section>
 
-        <!-- Blogs -->
-        <section id="blogs">
-            <div class="wrap">
-                <div id="blogs-container"></div>
-            </div>
-        </section>
-
-         <!-- Experience 
+      <!-- Experience 
         <section id="experience">
             <div class="wrap">
                 <div id="experience-container"></div>
@@ -76,40 +106,39 @@
         </section> 
         -->
 
+      <!-- Education -->
+      <section id="education">
+        <div class="wrap">
+          <div id="education-container"></div>
+        </div>
+      </section>
 
-        <!-- Education -->
-        <section id="education">
-            <div class="wrap">
-                <div id="education-container"></div>
-            </div>
-        </section>
+      <!-- Certifications -->
+      <section id="certifications">
+        <div class="wrap">
+          <div id="certifications-container"></div>
+        </div>
+      </section>
 
-        <!-- Certifications -->
-        <section id="certifications">
-            <div class="wrap">
-                <div id="certifications-container"></div>
+      <!-- Contact & Footer -->
+      <footer id="contact">
+        <div class="wrap footer-contact">
+          <div id="contact-container"></div>
+        </div>
+        <div class="footer-banner">
+          <div class="footer-banner-overlay">
+            <div class="footer-banner-content">
+              <div id="quoteBlock"></div>
+              <div class="footer-meta">
+                <span>© 2026 Anamika Ghosh</span>
+                <span>backend · ai/ml · builder</span>
+              </div>
             </div>
-        </section>
-
-        <!-- Contact & Footer -->
-        <footer id="contact">
-            <div class="wrap footer-contact">
-                <div id="contact-container"></div>
-            </div>
-            <div class="footer-banner">
-                <div class="footer-banner-overlay">
-                    <div class="footer-banner-content">
-                        <div id="quoteBlock"></div>
-                        <div class="footer-meta">
-                            <span>© 2026 Anamika Ghosh</span>
-                            <span>backend · ai/ml · builder</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </footer>
+          </div>
+        </div>
+      </footer>
     </main>
 
-    <script src="script.js"></script>
-</body>
+    <script src="script.js" defer></script>
+  </body>
 </html>
